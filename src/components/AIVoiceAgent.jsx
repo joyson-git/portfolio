@@ -294,8 +294,14 @@ export default function AIVoiceAgent() {
   }
 
   return (
-    <div className="ai-voice-widget">
-      <button className="ai-voice-orb-btn" onClick={toggleAgent} title="AI Voice Assistant">
+    <motion.div
+      className="ai-voice-widget"
+      drag
+      dragMomentum={false}
+      dragElastic={0.08}
+      whileDrag={{ scale: 1.08 }}
+    >
+      <button className="ai-voice-orb-btn" onClick={toggleAgent} title="AI Voice Assistant (Drag to move)">
         <span className="ai-voice-pulse" />
         <div className="ai-voice-orb-icon">
           {isSpeaking ? (
@@ -417,6 +423,6 @@ export default function AIVoiceAgent() {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   )
 }

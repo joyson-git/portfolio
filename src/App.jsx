@@ -15,6 +15,7 @@ import Achievements from './components/Achievements'
 import Contact from './components/Contact'
 import CommandPalette from './components/CommandPalette'
 import AIVoiceAgent from './components/AIVoiceAgent'
+import VisitorCounter from './components/VisitorCounter'
 import './App.css'
 
 export default function App() {

@@ -7,21 +7,21 @@ export default function VisitorCounter() {
   useEffect(() => {
     const fetchViews = async () => {
       try {
-        const hasVisited = sessionStorage.getItem('jp_portfolio_visited')
-        const endpoint = hasVisited
-          ? 'https://api.counterapi.dev/v1/joyson-pinto-portfolio/views'
-          : 'https://api.counterapi.dev/v1/joyson-pinto-portfolio/views/up'
+        const DEVICE_KEY = 'jp_device_tracked_v1'
+        const hasTracked = localStorage.getItem(DEVICE_KEY)
+        const endpoint = hasTracked
+          ? 'https://api.counterapi.dev/v1/joyson-pinto-portfolio-unique/views'
+          : 'https://api.counterapi.dev/v1/joyson-pinto-portfolio-unique/views/up'
 
         const res = await fetch(endpoint)
-        if(res.ok) {
+        if (res.ok) {
           const data = await res.json()
-          if(data && typeof data.count === 'number') {
+          if (data && typeof data.count === 'number') {
             setViews(data.count)
-            sessionStorage.setItem('jp_portfolio_visited', 'true')
+            localStorage.setItem(DEVICE_KEY, 'true')
           }
         }
       } catch {
-        // Graceful fallback for offline / adblocker
         setViews(null)
       } finally {
         setLoading(false)
@@ -32,11 +32,11 @@ export default function VisitorCounter() {
   }, [])
 
   return (
-    <div className="visitor-counter mono" title="Real-time Unique Visitor Tracking">
-      <span className="dot pulse" />
-      <span className="visitor-label">LIVE VISITS:</span>
+    <div className="visitor-counter mono" title="Unique Device Count (1 count per physical device)">
+      <span className="visitor-pulse-dot" />
+      <span className="visitor-label">UNIQUE VISITORS:</span>
       <span className="visitor-num">
-        {loading ? '...' : views !== null ? views.toLocaleString() : 'LIVE'}
+        {loading ? '...' : views !== null ? views.toLocaleString() : '1'}
       </span>
     </div>
   )

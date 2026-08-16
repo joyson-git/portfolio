@@ -43,7 +43,7 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    if (!loaded) return
+    if(!loaded) return
     const lenis = new Lenis({
       duration: 1.4,
       easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
@@ -71,7 +71,7 @@ export default function App() {
       <Cursor />
       <MagicParticleCanvas />
       <CommandPalette isOpen={cmdOpen} onClose={() => setCmdOpen(false)} />
-      
+
       <AnimatePresence mode="wait">
         {!loaded && <Loader key="loader" onDone={() => setLoaded(true)} />}
       </AnimatePresence>
@@ -89,7 +89,7 @@ export default function App() {
             <Achievements />
             <Contact />
           </main>
-          
+
           {/* Floating Back-to-Top Button */}
           <AnimatePresence>
             {showTopBtn && (
@@ -104,7 +104,7 @@ export default function App() {
           </AnimatePresence>
 
           <AIVoiceAgent />
-          
+
           {isOffline && (
             <div className="offline-banner mono">
               <span className="dot pulse" style={{ background: '#f59e0b', boxShadow: '0 0 8px #f59e0b' }} />

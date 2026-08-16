@@ -13,9 +13,9 @@ export default function VisitorCounter() {
           : 'https://api.counterapi.dev/v1/joyson-pinto-portfolio/views/up'
 
         const res = await fetch(endpoint)
-        if (res.ok) {
+        if(res.ok) {
           const data = await res.json()
-          if (data && typeof data.count === 'number') {
+          if(data && typeof data.count === 'number') {
             setViews(data.count)
             sessionStorage.setItem('jp_portfolio_visited', 'true')
           }

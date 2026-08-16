@@ -1753,10 +1753,43 @@
 .footer {
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   padding: 3rem clamp(1.5rem, 6vw, 7rem);
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
   font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.7);
   font-weight: 600;
+}
+
+.visitor-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.9rem;
+  background: #080808;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.9);
+  transition: all 0.2s ease;
+}
+
+.visitor-counter:hover {
+  border-color: #22c55e;
+}
+
+.visitor-label {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.7rem;
+}
+
+.visitor-num {
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 0.82rem;
 }
 
 /* ===== SCROLL TO TOP FLOATING BUTTON ===== */

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://portfolio.joysonpinto77.workers.dev/sitemap.xml

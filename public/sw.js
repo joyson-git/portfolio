@@ -1,7 +1,6 @@
-const CACHE_NAME = 'jp-portfolio-v1'
+const CACHE_NAME = 'jp-portfolio-v2'
 const STATIC_ASSETS = [
   '/',
-  '/index.html',
   '/favicon.svg',
   '/icons.svg',
   '/joy.png',
@@ -42,17 +41,38 @@ self.addEventListener('activate', (event) => {
   self.clients.claim()
 })
 
-// Fetch: Stale-While-Revalidate with full offline fallback
+// Fetch strategy:
+// 1. Navigation requests (HTML): Network-First (so new deploys load instantly), fallback to cache when offline
+// 2. Static Assets (CSS, JS, Images, Fonts): Cache-First / Stale-While-Revalidate
 self.addEventListener('fetch', (event) => {
-  // Only handle GET requests
   if (event.request.method !== 'GET') return
-
-  // Skip browser extensions or foreign protocols
   if (!event.request.url.startsWith('http')) return
 
+  // HTML Page Navigation -> Network-First
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const copy = response.clone()
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy))
+          }
+          return response
+        })
+        .catch(() => caches.match('/') || caches.match('/index.html'))
+    )
+    return
+  }
+
+  // API Requests (Counter API / external) -> Direct Network fetch
+  if (event.request.url.includes('api.counterapi.dev') || event.request.url.includes('api.web3forms.com')) {
+    event.respondWith(fetch(event.request))
+    return
+  }
+
+  // Static Assets -> Stale-While-Revalidate
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
-      // Return cached response immediately if available, while updating cache in background
       const fetchPromise = fetch(event.request)
         .then((networkResponse) => {
           if (networkResponse && networkResponse.status === 200) {
@@ -63,13 +83,7 @@ self.addEventListener('fetch', (event) => {
           }
           return networkResponse
         })
-        .catch(() => {
-          // If offline and request is HTML navigation, fallback to cached index.html
-          if (event.request.mode === 'navigate') {
-            return caches.match('/index.html')
-          }
-          return cachedResponse
-        })
+        .catch(() => cachedResponse)
 
       return cachedResponse || fetchPromise
     })

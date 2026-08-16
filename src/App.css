@@ -2149,3 +2149,22 @@
   color: #000000;
   background: #ffffff;
 }
+
+/* OFFLINE BANNER */
+.offline-banner {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 9980;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #080808;
+  border: 1px solid #f59e0b;
+  color: #f59e0b;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+}

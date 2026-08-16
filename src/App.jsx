@@ -21,6 +21,18 @@ export default function App() {
   const [loaded, setLoaded] = useState(false)
   const [cmdOpen, setCmdOpen] = useState(false)
   const [showTopBtn, setShowTopBtn] = useState(false)
+  const [isOffline, setIsOffline] = useState(typeof navigator !== 'undefined' ? !navigator.onLine : false)
+
+  useEffect(() => {
+    const handleOnline = () => setIsOffline(false)
+    const handleOffline = () => setIsOffline(true)
+    window.addEventListener('online', handleOnline)
+    window.addEventListener('offline', handleOffline)
+    return () => {
+      window.removeEventListener('online', handleOnline)
+      window.removeEventListener('offline', handleOffline)
+    }
+  }, [])
 
   useEffect(() => {
     const checkScroll = () => {
@@ -92,6 +104,14 @@ export default function App() {
           </AnimatePresence>
 
           <AIVoiceAgent />
+          
+          {isOffline && (
+            <div className="offline-banner mono">
+              <span className="dot pulse" style={{ background: '#f59e0b', boxShadow: '0 0 8px #f59e0b' }} />
+              <span>OFFLINE MODE ACTIVE · RUNNING FROM CACHE</span>
+            </div>
+          )}
+
           <footer className="footer">
             <span className="mono">© 2025 Joyson Pinto. Bangalore, India.</span>
           </footer>

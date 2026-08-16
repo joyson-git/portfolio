@@ -1,0 +1,23 @@
+{
+  "name": "Joyson Pinto · Portfolio",
+  "short_name": "Joyson Pinto",
+  "description": "Full Stack Developer & Automation Engineer Portfolio",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/joy.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

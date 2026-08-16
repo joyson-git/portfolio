@@ -114,6 +114,7 @@ export default function App() {
 
           <footer className="footer">
             <span className="mono">© 2025 Joyson Pinto. Bangalore, India.</span>
+            <VisitorCounter />
           </footer>
         </>
       )}

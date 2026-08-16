@@ -32,15 +32,39 @@ const contactMethods = [
 export default function Contact() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
-  const [form, setForm] = useState({ name: '', email: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', message: '', botcheck: false })
   const [status, setStatus] = useState('idle') // 'idle' | 'sending' | 'success' | 'error'
+  const lastSubmitTime = useRef(0)
 
-  const handle = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
+  const handle = e => {
+    const { name, value, type, checked } = e.target
+    setForm(f => ({ ...f, [name]: type === 'checkbox' ? checked : value }))
+  }
 
   const submit = async e => {
     e.preventDefault()
+
+    // 1. Honeypot check: If automated bot checked hidden field, drop silently
+    if (form.botcheck) {
+      setStatus('success')
+      setForm({ name: '', email: '', message: '', botcheck: false })
+      return
+    }
+
+    // 2. Rate-limiting check: Prevent spam submissions within 5 seconds
+    const now = Date.now()
+    if (now - lastSubmitTime.current < 5000) {
+      return
+    }
+    lastSubmitTime.current = now
+
     playClick()
     setStatus('sending')
+
+    // 3. Sanitize inputs
+    const cleanName = form.name.trim().slice(0, 100)
+    const cleanEmail = form.email.trim().slice(0, 150)
+    const cleanMessage = form.message.trim().slice(0, 5000)
 
     try {
       const response = await fetch('https://api.web3forms.com/submit', {
@@ -51,11 +75,12 @@ export default function Contact() {
         },
         body: JSON.stringify({
           access_key: '5790f33f-ddca-4d8c-9220-e3b6762b28ec',
-          name: form.name,
-          email: form.email,
-          message: form.message,
-          subject: `New Portfolio Message from ${form.name}`,
-          from_name: form.name,
+          name: cleanName,
+          email: cleanEmail,
+          message: cleanMessage,
+          subject: `New Portfolio Message from ${cleanName}`,
+          from_name: cleanName,
+          botcheck: false,
         }),
       })
 
@@ -63,20 +88,20 @@ export default function Contact() {
 
       if (data.success) {
         setStatus('success')
-        setForm({ name: '', email: '', message: '' })
+        setForm({ name: '', email: '', message: '', botcheck: false })
         setTimeout(() => setStatus('idle'), 5000)
       } else {
         // Fallback: Open mailto if API returned error
-        window.location.href = `mailto:joysonpinto77@gmail.com?subject=Portfolio%20Message%20from%20${encodeURIComponent(form.name)}&body=${encodeURIComponent(form.message)}`
+        window.location.href = `mailto:joysonpinto77@gmail.com?subject=Portfolio%20Message%20from%20${encodeURIComponent(cleanName)}&body=${encodeURIComponent(cleanMessage)}`
         setStatus('success')
-        setForm({ name: '', email: '', message: '' })
+        setForm({ name: '', email: '', message: '', botcheck: false })
         setTimeout(() => setStatus('idle'), 5000)
       }
     } catch {
       // Fallback: Open mailto if network is offline
-      window.location.href = `mailto:joysonpinto77@gmail.com?subject=Portfolio%20Message%20from%20${encodeURIComponent(form.name)}&body=${encodeURIComponent(form.message)}`
+      window.location.href = `mailto:joysonpinto77@gmail.com?subject=Portfolio%20Message%20from%20${encodeURIComponent(cleanName)}&body=${encodeURIComponent(cleanMessage)}`
       setStatus('success')
-      setForm({ name: '', email: '', message: '' })
+      setForm({ name: '', email: '', message: '', botcheck: false })
       setTimeout(() => setStatus('idle'), 5000)
     }
   }
@@ -135,6 +160,16 @@ export default function Contact() {
           transition={{ delay: 0.2, duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
         >
           <form className="contact-form" onSubmit={submit}>
+            {/* Honeypot Spam Bot Trap */}
+            <input
+              type="checkbox"
+              name="botcheck"
+              style={{ display: 'none' }}
+              checked={form.botcheck}
+              onChange={handle}
+              tabIndex="-1"
+              autoComplete="off"
+            />
             <div className="form-field">
               <label className="form-label mono">YOUR NAME</label>
               <input

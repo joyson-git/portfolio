@@ -61,7 +61,7 @@ export default function Hero() {
 
         <motion.p className="hero-lede" {...fadeUp(0.45)}>
           Building scalable web apps &amp; microservices with{' '}
-          <em>Spring Boot, Node.js &amp; Angular</em>.
+          <em>Spring Boot, Node.js </em>.
         </motion.p>
 
         <motion.div className="hero-offer-badge mono" {...fadeUp(0.5)}>

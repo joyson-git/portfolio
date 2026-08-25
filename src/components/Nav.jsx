@@ -85,7 +85,7 @@ export default function Nav({ onOpenCmd }) {
                 onMouseEnter={playHover}
                 onClick={playClick}
               >
-                <span className="nav-num">{l.num}.</span>
+
                 {l.label}
               </a>
             )
@@ -93,22 +93,6 @@ export default function Nav({ onOpenCmd }) {
         </nav>
 
         <div className="nav-actions">
-          <button
-            className="nav-audio-btn mono"
-            onClick={handleAudioToggle}
-            onMouseEnter={playHover}
-            title={audioState ? 'Enable Sound FX' : 'Mute Sound FX'}
-          >
-            {audioState ? '🔇 SFX' : '🔊 SFX'}
-          </button>
-          <button
-            className="nav-cmd-btn mono"
-            onClick={() => { playClick(); onOpenCmd() }}
-            onMouseEnter={playHover}
-            title="Search / Command Palette (Cmd+K)"
-          >
-            <span className="nav-cmd-icon">⌘K</span>
-          </button>
           <a
             href="/Joyson_Pinto_Resume.pdf"
             download="Joyson_Pinto_Resume.pdf"
@@ -142,7 +126,7 @@ export default function Nav({ onOpenCmd }) {
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: i * 0.07, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 className="mobile-link">
-                <span>{l.num}</span>{l.label}
+                {l.label}
               </motion.a>
             ))}
             <motion.a

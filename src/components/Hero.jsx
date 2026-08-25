@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import Avatar3D from './Avatar3D'
 
-const ROLES = ['Full Stack Developer', 'Spring Boot Engineer', 'Node.js Architect', 'E2E Automation Expert', 'AI Integration Builder']
+const ROLES = ['Full Stack Developer', 'Spring Boot Engineer', 'E2E Automation Expert', 'AI Integration Builder']
 
 function Typewriter() {
   const [idx, setIdx] = useState(0)
@@ -13,12 +13,12 @@ function Typewriter() {
     const word = ROLES[idx]
     const speed = del ? 40 : 90
     const timeout = setTimeout(() => {
-      if (!del) {
+      if(!del) {
         setTxt(word.slice(0, txt.length + 1))
-        if (txt.length + 1 === word.length) setTimeout(() => setDel(true), 1800)
+        if(txt.length + 1 === word.length) setTimeout(() => setDel(true), 1800)
       } else {
         setTxt(word.slice(0, txt.length - 1))
-        if (txt.length === 0) { setDel(false); setIdx(i => (i + 1) % ROLES.length) }
+        if(txt.length === 0) { setDel(false); setIdx(i => (i + 1) % ROLES.length) }
       }
     }, speed)
     return () => clearTimeout(timeout)

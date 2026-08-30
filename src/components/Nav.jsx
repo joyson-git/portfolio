@@ -1,145 +1,170 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion'
-import { isMuted, toggleMute, playHover, playClick } from '../utils/soundEffects'
+import { playHover, playClick } from '../utils/soundEffects'
+import { downloadResumePDF } from '../utils/downloadResume'
 
-const links = [
-  { label: 'About', href: '#about', num: '01' },
-  { label: 'Experience', href: '#experience', num: '02' },
-  { label: 'Projects', href: '#projects', num: '03' },
-  { label: 'Skills', href: '#skills', num: '04' },
-  { label: 'Education', href: '#education', num: '05' },
-  { label: 'Achievements', href: '#achievements', num: '06' },
-  { label: 'Contact', href: '#contact', num: '07' },
+const NAV_LINKS = [
+  { label: 'Projects', href: '#projects' },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Stack', href: '#skills' },
+  { label: 'Contact', href: '#contact' },
 ]
 
-export default function Nav({ onOpenCmd }) {
+export default function Nav({ onOpenCmd, onOpenContact }) {
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('')
   const [menuOpen, setMenuOpen] = useState(false)
-  const [audioState, setAudioState] = useState(isMuted())
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, { stiffness: 300, damping: 30, restDelta: 0.001 })
 
   useEffect(() => {
     const fn = () => {
-      setScrolled(window.scrollY > 40)
-
-      const sectionIds = ['about', 'experience', 'projects', 'skills', 'education', 'achievements', 'contact']
-      const scrollPos = window.scrollY + 200
-
-      for (let i = sectionIds.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sectionIds[i])
-        if (el && el.offsetTop <= scrollPos) {
-          setActiveSection(sectionIds[i])
-          break
-        }
+      setScrolled(window.scrollY > 50)
+      const ids = ['projects', 'experience', 'skills', 'contact']
+      const pos = window.scrollY + 160
+      for (let i = ids.length - 1; i >= 0; i--) {
+        const el = document.getElementById(ids[i])
+        if (el && el.offsetTop <= pos) { setActiveSection(ids[i]); break }
       }
     }
-    window.addEventListener('scroll', fn)
+    window.addEventListener('scroll', fn, { passive: true })
     return () => window.removeEventListener('scroll', fn)
   }, [])
 
-  const handleAudioToggle = () => {
-    const muted = toggleMute()
-    setAudioState(muted)
-    if (!muted) playClick()
-  }
-
   return (
     <>
-      {/* Scroll Progress Bar */}
+      {/* Scroll progress bar */}
       <motion.div
-        className="scroll-progress-bar"
         style={{
           scaleX,
           transformOrigin: '0%',
           position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
+          top: 0, left: 0, right: 0,
           height: '2px',
-          background: '#ffffff',
-          boxShadow: '0 0 10px rgba(255, 255, 255, 0.8)',
-          zIndex: 9999
+          background: 'linear-gradient(90deg, var(--scs-light-orange), var(--scs-dark-teal))',
+          zIndex: 9999,
         }}
       />
 
       <motion.header
-        className={`nav ${scrolled ? 'nav--scrolled' : ''}`}
+        className={`scs-header${scrolled ? ' scs-header--scrolled' : ''}`}
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
-        <a href="#hero" className="nav-logo" onMouseEnter={playHover} onClick={playClick}>
-          JOYSON PINTO<span>.</span>
+        {/* Progressive blur layers */}
+        <div className="scs-header__blur-l1" />
+        <div className="scs-header__blur-l2" />
+        <div className="scs-header__blur-l3" />
+        <div className="scs-header__blur-l4" />
+
+        {/* Logo */}
+        <a href="#hero" className="scs-header__logo" onMouseEnter={playHover} onClick={playClick} aria-label="Home">
+          {/* Geometric monogram SVG */}
+          <svg className="scs-header__monogram" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <path d="M4 24L14 4L24 24" stroke="white" strokeWidth="2" strokeLinejoin="round" />
+            <path d="M8 17h12" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+            <rect x="11" y="20" width="6" height="4" fill="white" opacity="0.7" />
+          </svg>
+          <span className="scs-header__logo-text scs-mono">JOYSON PINTO</span>
         </a>
 
-        <nav className="nav-links">
-          {links.map(l => {
-            const isActive = activeSection === l.href.replace('#', '')
+        {/* Center pill nav */}
+        <nav className="scs-header__nav" aria-label="Main navigation">
+          {NAV_LINKS.map((link, i) => {
+            const sectionId = link.href.replace('#', '')
+            const isActive = activeSection === sectionId
             return (
-              <a
-                key={l.href}
-                href={l.href}
-                className={`nav-link ${isActive ? 'nav-link--active' : ''}`}
-                onMouseEnter={playHover}
-                onClick={playClick}
-              >
-
-                {l.label}
-              </a>
+              <span key={link.href} className="scs-header__nav-item">
+                {i > 0 && <span className="scs-header__nav-sep" aria-hidden="true">/</span>}
+                <a
+                  href={link.href}
+                  className={`scs-header__nav-link scs-mono${isActive ? ' scs-header__nav-link--active' : ''}`}
+                  onMouseEnter={playHover}
+                  onClick={playClick}
+                >
+                  {link.label}
+                </a>
+              </span>
             )
           })}
         </nav>
 
-        <div className="nav-actions">
+          {/* Right actions */}
+        <div className="scs-header__actions">
           <a
-            href="/Joyson_Pinto_Resume.pdf"
-            download="Joyson_Pinto_Resume.pdf"
+            href="/Joyson_Pinto_FullStackDeveloper_Resume.pdf"
+            download="Joyson_Pinto_FullStackDeveloper_Resume.pdf"
             target="_blank"
-            rel="noreferrer"
-            className="nav-resume-btn mono"
-            onMouseEnter={playHover}
-            onClick={playClick}
-            title="Download Joyson Pinto's Resume (PDF)"
+            rel="noopener noreferrer"
+            className="scs-header__cv scs-mono"
+            title="Download Joyson Pinto Resume (PDF)"
           >
-            CV 📄
+            CV <span style={{ opacity: 0.6 }}>↓</span>
           </a>
-          <a href="#contact" className="nav-cta" onMouseEnter={playHover} onClick={playClick}>Hire Me →</a>
-        </div>
 
-        <button className="nav-burger" onClick={() => { playClick(); setMenuOpen(v => !v) }} aria-label="menu">
-          <span className={menuOpen ? 'open' : ''} />
-          <span className={menuOpen ? 'open' : ''} />
-        </button>
+          <button
+            className="scs-btn scs-btn--primary"
+            onClick={() => { playClick(); onOpenContact() }}
+          >
+            <span className="scs-btn__label">Work With Us</span>
+            <span className="scs-btn__circle" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+          </button>
+
+          {/* Mobile burger */}
+          <button
+            className="scs-header__burger"
+            onClick={() => { playClick(); setMenuOpen((v) => !v) }}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          >
+            <span className={menuOpen ? 'open' : ''} />
+            <span className={menuOpen ? 'open' : ''} />
+          </button>
+        </div>
       </motion.header>
 
+      {/* Mobile slide menu */}
       <AnimatePresence>
         {menuOpen && (
-          <motion.div className="mobile-menu"
-            initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
-            transition={{ duration: 0.45, ease: [0.76, 0, 0.24, 1] }}>
-            {links.map((l, i) => (
-              <motion.a key={l.href} href={l.href}
+          <motion.div
+            className="scs-mobile-menu"
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
+          >
+            {NAV_LINKS.map((link, i) => (
+              <motion.a
+                key={link.href}
+                href={link.href}
+                className="scs-mobile-menu__link scs-dis2"
                 onClick={() => setMenuOpen(false)}
                 initial={{ x: 60, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: i * 0.07, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="mobile-link">
-                {l.label}
+              >
+                {link.label}
               </motion.a>
             ))}
-            <motion.a
-              href="/Joyson_Pinto_Resume.pdf"
-              download="Joyson_Pinto_Resume.pdf"
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => setMenuOpen(false)}
-              className="mobile-link"
-              style={{ color: '#ffffff', borderTop: '1px solid rgba(255, 255, 255, 0.2)', marginTop: '1rem', paddingTop: '1rem' }}
+            <motion.button
+              className="scs-btn scs-btn--primary"
+              onClick={() => { setMenuOpen(false); onOpenContact() }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              style={{ marginTop: '2rem', alignSelf: 'flex-start' }}
             >
-              <span>📄</span>Download Resume
-            </motion.a>
+              <span className="scs-btn__label">Start a Project</span>
+              <span className="scs-btn__circle" aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>

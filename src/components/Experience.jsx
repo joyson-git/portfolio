@@ -13,9 +13,11 @@ const jobs = [
       'Built RESTful APIs with Node.js, Express.js, and MongoDB (Mongoose) to handle patient data, hospital operations, and healthcare workflows.',
       'Engineered end-to-end test automation suites using Playwright and WebdriverIO, catching regressions across critical patient-facing flows and improving release confidence.',
       'Conducted load and performance testing using Artillery, identifying API bottlenecks and ensuring system stability under high concurrency.',
+      'Implemented Retrieval-Augmented Generation (RAG) pipelines using Ollama for localized LLM interactions and integrated speech-to-text capabilities to enhance user accessibility.',
+      'Evaluated and optimized LLM application performance using Ragas framework to measure faithfulness, answer relevance, and context precision.',
       'Used AI-assisted development via MCP (Model Context Protocol) server integration to accelerate automation script generation and speed up delivery.',
     ],
-    tech: ['Angular', 'Node.js', 'Express.js', 'MongoDB', 'Playwright', 'WebdriverIO', 'Artillery', 'MCP AI Protocol'],
+    tech: ['Angular', 'Node.js', 'Express.js', 'MongoDB', 'Playwright', 'WebdriverIO', 'Artillery', 'RAG / Ollama', 'MCP AI Protocol'],
   },
   {
     title: 'Software Engineer Intern',
@@ -43,7 +45,7 @@ export default function Experience() {
         animate={inView ? { opacity: 1, x: 0 } : {}}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
-        Work <em>Experience</em>.
+        <span className="scs-gradient-text">Work Experience.</span>
       </motion.h2>
 
       <div className="timeline">
@@ -76,18 +78,18 @@ export default function Experience() {
                   ))}
                 </ul>
 
-                <div className="tl-tech">
-                  {job.tech.map(t => (
-                    <motion.span
-                      key={t}
-                      className="tl-tag mono"
-                      whileHover={{ scale: 1.08, backgroundColor: '#ffffff', color: '#000000' }}
-                      transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                    >
-                      {t}
-                    </motion.span>
-                  ))}
-                </div>
+                  <div className="tl-tech">
+                    {job.tech.map(t => (
+                      <motion.span
+                        key={t}
+                        className="tl-tag mono"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                      >
+                        {t}
+                      </motion.span>
+                    ))}
+                  </div>
               </div>
             </TiltCard>
           </motion.div>

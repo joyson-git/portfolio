@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import Lenis from 'lenis'
+
 import Loader from './components/Loader'
 import Cursor from './components/Cursor'
 import MagicParticleCanvas from './components/MagicParticleCanvas'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
-import About from './components/About'
-import Experience from './components/Experience'
 import Projects from './components/Projects'
+import Experience from './components/Experience'
 import Skills from './components/Skills'
 import Education from './components/Education'
 import Achievements from './components/Achievements'
 import Contact from './components/Contact'
+import ContactDrawer from './components/ContactDrawer'
 import CommandPalette from './components/CommandPalette'
 import AIVoiceAgent from './components/AIVoiceAgent'
 
@@ -21,8 +22,11 @@ import './App.css'
 export default function App() {
   const [loaded, setLoaded] = useState(false)
   const [cmdOpen, setCmdOpen] = useState(false)
+  const [contactOpen, setContactOpen] = useState(false)
   const [showTopBtn, setShowTopBtn] = useState(false)
-  const [isOffline, setIsOffline] = useState(typeof navigator !== 'undefined' ? !navigator.onLine : false)
+  const [isOffline, setIsOffline] = useState(
+    typeof navigator !== 'undefined' ? !navigator.onLine : false
+  )
 
   useEffect(() => {
     const handleOnline = () => setIsOffline(false)
@@ -36,15 +40,13 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    const checkScroll = () => {
-      setShowTopBtn(window.scrollY > 400)
-    }
-    window.addEventListener('scroll', checkScroll)
+    const checkScroll = () => setShowTopBtn(window.scrollY > 400)
+    window.addEventListener('scroll', checkScroll, { passive: true })
     return () => window.removeEventListener('scroll', checkScroll)
   }, [])
 
   useEffect(() => {
-    if(!loaded) return
+    if (!loaded) return
     const lenis = new Lenis({
       duration: 1.4,
       easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
@@ -57,15 +59,11 @@ export default function App() {
       lenis.raf(time)
       requestAnimationFrame(raf)
     }
-
     requestAnimationFrame(raf)
-
     return () => lenis.destroy()
   }, [loaded])
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
   return (
     <>
@@ -73,25 +71,32 @@ export default function App() {
       <MagicParticleCanvas />
       <CommandPalette isOpen={cmdOpen} onClose={() => setCmdOpen(false)} />
 
+      {/* O-SCS Slide-in contact drawer — mounted once at root */}
+      <ContactDrawer isOpen={contactOpen} onClose={() => setContactOpen(false)} />
+
       <AnimatePresence mode="wait">
         {!loaded && <Loader key="loader" onDone={() => setLoaded(true)} />}
       </AnimatePresence>
 
       {loaded && (
         <>
-          <Nav onOpenCmd={() => setCmdOpen(true)} />
+          <Nav
+            onOpenCmd={() => setCmdOpen(true)}
+            onOpenContact={() => setContactOpen(true)}
+          />
+
           <main>
-            <Hero />
-            <About />
-            <Experience />
+            {/* Hero and primary sections */}
+            <Hero onOpenContact={() => setContactOpen(true)} />
             <Projects />
+            <Experience />
             <Skills />
             <Education />
             <Achievements />
             <Contact />
           </main>
 
-          {/* Floating Back-to-Top Button */}
+          {/* Floating Back-to-Top */}
           <AnimatePresence>
             {showTopBtn && (
               <button
@@ -115,7 +120,6 @@ export default function App() {
 
           <footer className="footer">
             <span className="mono">© 2025 Joyson Pinto. Bangalore, India.</span>
-
           </footer>
         </>
       )}

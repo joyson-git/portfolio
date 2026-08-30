@@ -30,7 +30,7 @@ export default function Education() {
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
       >
-        Education &amp; <em>Degrees</em>.
+        <span className="scs-gradient-text">Education &amp; Degrees.</span>
       </motion.h2>
 
       <motion.div

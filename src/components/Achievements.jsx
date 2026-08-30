@@ -36,7 +36,7 @@ export default function Achievements() {
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
       >
-        Key <em>Achievements</em>.
+        <span className="scs-gradient-text">Key Achievements.</span>
       </motion.h2>
 
       <div className="achieve-clean-list">

@@ -107,7 +107,7 @@ export default function Projects() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            Featured <em>Projects</em>.
+            <span className="scs-gradient-text">Featured Projects.</span>
           </motion.h2>
           <p className="projects-subtitle">Explore microservices, AI integrations, and full-stack software systems.</p>
         </div>

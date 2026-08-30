@@ -114,7 +114,7 @@ export default function Contact() {
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
       >
-        Let&apos;s build something <em>together</em>.
+        <span className="scs-gradient-text">Let&apos;s build something together.</span>
       </motion.h2>
 
       <div className="contact-grid">

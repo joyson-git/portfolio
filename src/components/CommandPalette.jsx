@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { downloadResumePDF } from '../utils/downloadResume'
 
 const COMMANDS = [
   { id: 'hero', label: 'Go to Top / Hero', category: 'Navigation', action: () => scrollTo('hero') },
-  { id: 'about', label: 'About Joyson', category: 'Navigation', action: () => scrollTo('about') },
-  { id: 'experience', label: 'Experience & Career', category: 'Navigation', action: () => scrollTo('experience') },
   { id: 'projects', label: 'Featured Projects', category: 'Navigation', action: () => scrollTo('projects') },
+  { id: 'experience', label: 'Experience & Career', category: 'Navigation', action: () => scrollTo('experience') },
   { id: 'skills', label: 'Tech Stack & Skills', category: 'Navigation', action: () => scrollTo('skills') },
-  { id: 'education', label: 'Education & Certifications', category: 'Navigation', action: () => scrollTo('education') },
-  { id: 'contact', label: 'Get in Touch', category: 'Navigation', action: () => scrollTo('contact') },
+  { id: 'education', label: 'Education & Degrees', category: 'Navigation', action: () => scrollTo('education') },
+  { id: 'achievements', label: 'Key Achievements', category: 'Navigation', action: () => scrollTo('achievements') },
+  { id: 'contact', label: 'Get in Touch / Contact', category: 'Navigation', action: () => scrollTo('contact') },
+  { id: 'copy-email', label: 'Copy Email to Clipboard (joysonpinto77@gmail.com)', category: 'Action', action: () => { navigator.clipboard?.writeText('joysonpinto77@gmail.com'); } },
   { id: 'github', label: 'Open GitHub Profile', category: 'Socials', action: () => window.open('https://github.com/joyson-git', '_blank') },
-  { id: 'linkedin', label: 'Open LinkedIn Profile', category: 'Socials', action: () => window.open('https://www.linkedin.com/in/joyson-pinto/', '_blank') },
-  { id: 'resume', label: 'Download Resume (PDF)', category: 'Action', action: () => window.open('/Joyson_Pinto_Resume.pdf', '_blank') },
-  { id: 'email', label: 'Send Email', category: 'Action', action: () => window.open('mailto:joysonpinto77@gmail.com') },
+  { id: 'resume', label: 'Download Resume (PDF)', category: 'Action', action: () => downloadResumePDF() },
+  { id: 'email', label: 'Send Email Directly', category: 'Action', action: () => window.open('mailto:joysonpinto77@gmail.com') },
 ]
 
 function scrollTo(id) {

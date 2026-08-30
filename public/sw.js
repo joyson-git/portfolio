@@ -1,10 +1,9 @@
-const CACHE_NAME = 'jp-portfolio-v2'
+const CACHE_NAME = 'jp-portfolio-v3'
 const STATIC_ASSETS = [
   '/',
   '/favicon.svg',
   '/icons.svg',
   '/joy.png',
-  '/Joyson_Pinto_Resume.pdf',
   '/projects/proj1.jpg',
   '/projects/proj2.jpg',
   '/projects/proj3.jpg',
@@ -61,6 +60,11 @@ self.addEventListener('fetch', (event) => {
         })
         .catch(() => caches.match('/') || caches.match('/index.html'))
     )
+    return
+  }
+
+  // PDF / Download assets -> Direct native browser download (no service worker caching)
+  if (event.request.url.toLowerCase().endsWith('.pdf') || event.request.url.includes('.pdf')) {
     return
   }
 

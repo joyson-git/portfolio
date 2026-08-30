@@ -81,7 +81,7 @@ export default function Skills() {
         animate={inView ? { opacity: 1, x: 0 } : {}}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
-        Technical <em>Skills</em>.
+        <span className="scs-gradient-text">Technical Skills.</span>
       </motion.h2>
 
       <div className="skills-grid">

@@ -104,3 +104,118 @@ button {
     box-shadow: 0 0 15px #ffffff;
   }
 }
+
+/* =====================================================================
+   O-SCS DESIGN SYSTEM TOKENS
+   ===================================================================== */
+
+:root {
+  /* O-SCS brand palette */
+  --scs-dark-orange:    #dd4022;
+  --scs-light-orange:   #f05f43;
+  --scs-dark-teal:      #2d96b2;
+  --scs-light-teal:     #277793;
+  --scs-bg-main:        #050505;
+  --scs-bg-surface:     #0d0d0d;
+  --scs-bg-card:        #111111;
+  --scs-border:         rgba(255, 255, 255, 0.1);
+  --scs-border-bright:  rgba(255, 255, 255, 0.2);
+  --scs-text-primary:   #ffffff;
+  --scs-text-secondary: rgba(255, 255, 255, 0.55);
+  --scs-text-dim:       rgba(255, 255, 255, 0.3);
+
+  /* O-SCS typography */
+  --scs-font-display:  'Montserrat', 'Space Grotesk', sans-serif;
+  --scs-font-body:     'Inter', 'Plus Jakarta Sans', sans-serif;
+  --scs-font-mono:     'JetBrains Mono', monospace;
+
+  /* O-SCS layout */
+  --scs-container-max: 1280px;
+  --scs-container-px:  clamp(1.5rem, 5vw, 6rem);
+  --scs-ease:          cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* O-SCS Display Headings */
+.scs-dis1 {
+  font-family: var(--scs-font-display);
+  font-size: clamp(2rem, 5vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--scs-text-primary);
+}
+
+.scs-dis2 {
+  font-family: var(--scs-font-display);
+  font-size: clamp(1.4rem, 3vw, 3rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--scs-text-primary);
+}
+
+.scs-h2 {
+  font-family: var(--scs-font-display);
+  font-size: clamp(1.4rem, 3.5vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--scs-text-primary);
+}
+
+.scs-mono {
+  font-family: var(--scs-font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* O-SCS gradient text (orange→white→teal) */
+.scs-gradient-text {
+  background: linear-gradient(90deg, var(--scs-light-orange) 0%, #ffffff 45%, var(--scs-dark-teal) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* O-SCS Container */
+.scs-container {
+  max-width: var(--scs-container-max);
+  margin: 0 auto;
+  padding-left: var(--scs-container-px);
+  padding-right: var(--scs-container-px);
+}
+
+/* O-SCS Keyframe Animations */
+@keyframes scs-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes scs-rotation {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes scs-rotation-reverse {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+@keyframes scs-pulse-orange {
+  0%   { box-shadow: 0 0 0 0 rgba(240, 95, 67, 0.5); }
+  70%  { box-shadow: 0 0 0 10px rgba(240, 95, 67, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(240, 95, 67, 0); }
+}
+
+@keyframes scs-fade-in-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scs-stroke-draw {
+  from { stroke-dashoffset: 314; }
+  to   { stroke-dashoffset: var(--scs-offset, 80); }
+}

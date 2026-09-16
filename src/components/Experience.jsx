@@ -38,62 +38,65 @@ export default function Experience() {
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section className="exp section" id="experience" ref={ref}>
-      <motion.h2
-        className="section-title"
-        initial={{ opacity: 0, x: -30 }}
-        animate={inView ? { opacity: 1, x: 0 } : {}}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <span className="scs-gradient-text">Work Experience.</span>
-      </motion.h2>
+    <section className="np-page-section" id="experience" ref={ref}>
+      <div className="np-broadsheet-wrapper">
 
-      <div className="timeline">
-        {jobs.map((job, ji) => (
-          <motion.div key={ji}
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: ji * 0.15, duration: 1.0, ease: [0.16, 1, 0.3, 1] }}>
-            <TiltCard maxTilt={5}>
-              <div className="timeline-card">
-                <div className="tl-header">
-                  <div>
-                    <div className="tl-title">{job.title}</div>
-                    <div className="tl-company">{job.company}</div>
-                  </div>
-                  <div className="tl-meta mono">
-                    <div>{job.period}</div>
-                    <div style={{ color: 'var(--fg-dim)', fontSize: '0.8rem' }}>{job.location}</div>
-                  </div>
+        {/* ── Broadsheet Folio Header ── */}
+        <div className="np-folio-header font-mono">
+          <span>PAGE 4 · INDUSTRIAL DISPATCHES &amp; CHRONICLES</span>
+          <span>GENZ TIMES · PINTO EDITION</span>
+        </div>
+
+        <hr className="np-rule-thick" />
+
+        <h2 className="np-section-headline font-headline">
+          CAREER CHRONICLES &amp; FIELD BULLETINS
+        </h2>
+        <p className="np-section-deck font-serif">
+          Documenting professional milestones across enterprise software engineering, resilient microservice delivery, and end-to-end automation architecture.
+        </p>
+
+        <hr className="np-rule-double" />
+
+        <div className="np-dispatch-timeline">
+          {jobs.map((job, ji) => (
+            <motion.div
+              key={ji}
+              className="np-dispatch-card"
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: ji * 0.15, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="np-dispatch-header">
+                <div>
+                  <div className="np-dispatch-role font-serif">{job.title}</div>
+                  <div className="np-dispatch-company font-headline">{job.company}</div>
                 </div>
-
-                <ul className="tl-points">
-                  {job.points.map((p, i) => (
-                    <motion.li key={i}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={inView ? { opacity: 1, x: 0 } : {}}
-                      transition={{ delay: 0.3 + i * 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}>
-                      {p}
-                    </motion.li>
-                  ))}
-                </ul>
-
-                  <div className="tl-tech">
-                    {job.tech.map(t => (
-                      <motion.span
-                        key={t}
-                        className="tl-tag mono"
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                      >
-                        {t}
-                      </motion.span>
-                    ))}
-                  </div>
+                <div className="np-dispatch-meta font-mono" style={{ textAlign: 'right' }}>
+                  <div style={{ color: 'var(--np-ink)', fontWeight: 700 }}>{job.period}</div>
+                  <div style={{ color: 'var(--np-ink-muted)' }}>{job.location}</div>
+                </div>
               </div>
-            </TiltCard>
-          </motion.div>
-        ))}
+
+              <ul className="np-dispatch-list">
+                {job.points.map((p, i) => (
+                  <li key={i} className="font-body">
+                    {p}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="np-article-card__tags" style={{ marginTop: '0.8rem' }}>
+                {job.tech.map(t => (
+                  <span key={t} className="np-tag-ink font-mono">
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
       </div>
     </section>
   )

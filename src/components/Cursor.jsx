@@ -52,7 +52,7 @@ export default function Cursor() {
         animate={{
           scale: isHover ? 0.4 : 1,
           opacity: isHover ? 0.8 : 1,
-          backgroundColor: '#ffffff'
+          backgroundColor: 'var(--np-ink)'
         }}
         transition={{ duration: 0.2 }}
         className="cursor-dot"
@@ -62,8 +62,8 @@ export default function Cursor() {
         style={{ x: trailX, y: trailY, translateX: '-50%', translateY: '-50%' }}
         animate={{
           scale: isHover ? 2.4 : 1,
-          borderColor: isHover ? '#ffffff' : 'rgba(255, 255, 255, 0.4)',
-          backgroundColor: isHover ? 'rgba(255, 255, 255, 0.08)' : 'transparent'
+          borderColor: isHover ? 'var(--np-ink)' : 'var(--np-border)',
+          backgroundColor: isHover ? 'rgba(0, 0, 0, 0.05)' : 'transparent'
         }}
         transition={{ duration: 0.25 }}
         className="cursor-ring"

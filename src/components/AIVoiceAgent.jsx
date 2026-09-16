@@ -11,6 +11,51 @@ const QUICK_PROMPTS = [
   'How to contact Joyson?'
 ]
 
+function playRadioCue(type = 'static') {
+  const AudioContext = window.AudioContext || window.webkitAudioContext
+  if (!AudioContext) return
+
+  try {
+    const context = new AudioContext()
+    const gain = context.createGain()
+    gain.connect(context.destination)
+
+    if (type === 'click') {
+      const oscillator = context.createOscillator()
+      oscillator.type = 'square'
+      oscillator.frequency.value = 900
+      gain.gain.setValueAtTime(0.08, context.currentTime)
+      gain.gain.exponentialRampToValueAtTime(0.001, context.currentTime + 0.07)
+      oscillator.connect(gain)
+      oscillator.start()
+      oscillator.stop(context.currentTime + 0.07)
+      oscillator.onended = () => context.close()
+      return
+    }
+
+    const duration = 0.18
+    const buffer = context.createBuffer(1, context.sampleRate * duration, context.sampleRate)
+    const noise = buffer.getChannelData(0)
+    for (let i = 0; i < noise.length; i += 1) noise[i] = Math.random() * 2 - 1
+
+    const source = context.createBufferSource()
+    const filter = context.createBiquadFilter()
+    filter.type = 'bandpass'
+    filter.frequency.value = 1450
+    filter.Q.value = 0.8
+    gain.gain.setValueAtTime(0.001, context.currentTime)
+    gain.gain.exponentialRampToValueAtTime(0.12, context.currentTime + 0.025)
+    gain.gain.exponentialRampToValueAtTime(0.001, context.currentTime + duration)
+    source.buffer = buffer
+    source.connect(filter)
+    filter.connect(gain)
+    source.start()
+    source.onended = () => context.close()
+  } catch {
+    // Audio cues are decorative; speech should still work if Web Audio is blocked.
+  }
+}
+
 // -----------------------------------------------------------------------
 // Pretrained knowledge base — sourced from Joyson Pinto's resume.
 // Each entry: id, an array of trigger keywords/phrases, the section to
@@ -149,9 +194,10 @@ export default function AIVoiceAgent() {
   const [inputText, setInputText] = useState('')
   const [isInvalid, setIsInvalid] = useState(false)
   const [agentResponse, setAgentResponse] = useState(
-    'Hello! I am Joyson\u2019s AI Voice Assistant.'
+    'Welcome to the Newsroom Assistant. Ask me about Joyson\u2019s work, skills, projects, or experience.'
   )
   const recognitionRef = useRef(null)
+  const speakTimerRef = useRef(null)
 
   const handleTextSubmit = (e) => {
     e.preventDefault()
@@ -189,11 +235,14 @@ export default function AIVoiceAgent() {
       return
     }
 
+    clearTimeout(speakTimerRef.current)
     window.speechSynthesis.cancel()
+    playRadioCue()
 
     const utterance = new SpeechSynthesisUtterance(text)
-    utterance.rate = 1.0
-    utterance.pitch = 1.05
+    utterance.rate = 0.88
+    utterance.pitch = 0.78
+    utterance.volume = 0.92
 
     const voices = window.speechSynthesis.getVoices()
     const preferredVoice = voices.find(
@@ -208,6 +257,7 @@ export default function AIVoiceAgent() {
     utterance.onend = () => {
       setIsSpeaking(false)
       setIsPaused(false)
+      playRadioCue('click')
       if(onEndCallback) onEndCallback()
     }
     utterance.onerror = () => {
@@ -216,7 +266,9 @@ export default function AIVoiceAgent() {
       if(onEndCallback) onEndCallback()
     }
 
-    window.speechSynthesis.speak(utterance)
+    speakTimerRef.current = setTimeout(() => {
+      window.speechSynthesis.speak(utterance)
+    }, 120)
   }
 
   const togglePauseSpeech = () => {
@@ -232,6 +284,7 @@ export default function AIVoiceAgent() {
 
   const stopSpeech = () => {
     if(!('speechSynthesis' in window)) return
+    clearTimeout(speakTimerRef.current)
     window.speechSynthesis.cancel()
     setIsSpeaking(false)
     setIsPaused(false)
@@ -285,8 +338,9 @@ export default function AIVoiceAgent() {
     const nextState = !isOpen
     setIsOpen(nextState)
     if(nextState) {
-      speakText('Hello! I am Joyson\u2019s AI Voice Assistant. How can I help you today?')
+      speakText('Welcome to the Newsroom Assistant. What would you like to know about Joyson?')
     } else {
+      clearTimeout(speakTimerRef.current)
       window.speechSynthesis.cancel()
       setIsSpeaking(false)
       setIsPaused(false)
@@ -301,7 +355,7 @@ export default function AIVoiceAgent() {
       dragElastic={0.08}
       whileDrag={{ scale: 1.08 }}
     >
-      <button className="ai-voice-orb-btn" onClick={toggleAgent} title="AI Voice Assistant (Drag to move)">
+      <button className="ai-voice-orb-btn" onClick={toggleAgent} title="Open Newsroom Assistant (drag to move)">
         <span className="ai-voice-pulse" />
         <div className="ai-voice-orb-icon">
           {isSpeaking ? (
@@ -309,19 +363,10 @@ export default function AIVoiceAgent() {
               <span /><span /><span />
             </div>
           ) : (
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 100 100"
-              style={{ filter: 'drop-shadow(0 0 8px #e63946) drop-shadow(0 0 16px rgba(168, 222, 222, 0.6))' }}
-            >
-              <path d="M50 5 C28 5 12 25 12 50 C12 75 32 95 50 95 C68 95 88 75 88 50 C88 25 72 5 50 5 Z" fill="#e63946" />
-              <path d="M22 45 C30 32 44 36 47 48 C41 62 28 65 22 45 Z" fill="#a8dede" stroke="#030406" strokeWidth="3.5" />
-              <path d="M78 45 C70 32 56 36 53 48 C59 62 72 65 78 45 Z" fill="#a8dede" stroke="#030406" strokeWidth="3.5" />
-            </svg>
+            <span className="ai-voice-press-icon" aria-hidden="true">NEWS<br />WIRE</span>
           )}
         </div>
-        <span className="ai-voice-orb-badge mono">AI AGENT</span>
+        <span className="ai-voice-orb-badge mono">ASK THE NEWSROOM</span>
       </button>
 
       <AnimatePresence>
@@ -336,7 +381,7 @@ export default function AIVoiceAgent() {
             <div className="ai-voice-card-header">
               <div className="ai-voice-header-left">
                 <span className="ai-voice-status-dot" />
-                <span className="ai-voice-title mono">JOYSON AI VOICE AGENT</span>
+                <span className="ai-voice-title mono">NEWSROOM ASSISTANT · LIVE WIRE</span>
               </div>
               <button className="ai-voice-close" onClick={toggleAgent}>✕</button>
             </div>
@@ -377,7 +422,7 @@ export default function AIVoiceAgent() {
               <div className={`ai-voice-response-box ${isInvalid ? 'ai-voice-response-box--invalid' : ''}`}>
                 <p className="ai-voice-text">{agentResponse}</p>
                 {isInvalid && (
-                  <p className="ai-voice-invalid-tag mono">⚠ No matching answer found</p>
+                  <p className="ai-voice-invalid-tag mono">NO MATCH IN THE NEWSROOM ARCHIVE</p>
                 )}
                 {transcript && (
                   <p className="ai-voice-transcript mono">You asked: "{transcript}"</p>
@@ -388,7 +433,7 @@ export default function AIVoiceAgent() {
                 <input
                   type="text"
                   className="ai-voice-text-input mono"
-                  placeholder="Ask a question or type here..."
+                  placeholder="Ask the newsroom..."
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
                 />
@@ -399,14 +444,14 @@ export default function AIVoiceAgent() {
                   type="button"
                   className={`ai-voice-mic-icon-btn ${isListening ? 'ai-voice-mic-icon-btn--active' : ''}`}
                   onClick={startVoiceInput}
-                  title="Voice Command Input"
+                  title="Start Voice Dispatch"
                 >
-                  {isListening ? '🎙️' : '🎤'}
+                  {isListening ? 'LISTENING…' : 'VOICE'}
                 </button>
               </form>
 
               <div className="ai-voice-prompts">
-                <span className="ai-voice-prompts-label mono">&gt; QUICK QUESTIONS:</span>
+                <span className="ai-voice-prompts-label mono">NEWSROOM SHORTCUTS</span>
                 <div className="ai-voice-chips">
                   {QUICK_PROMPTS.map((prompt) => (
                     <button

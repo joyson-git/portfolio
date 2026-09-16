@@ -1,15 +1,8 @@
-const CACHE_NAME = 'jp-portfolio-v3'
+const CACHE_NAME = 'jp-portfolio-v4'
 const STATIC_ASSETS = [
   '/',
   '/favicon.svg',
   '/icons.svg',
-  '/joy.png',
-  '/projects/proj1.jpg',
-  '/projects/proj2.jpg',
-  '/projects/proj3.jpg',
-  '/projects/proj4.jpg',
-  '/projects/proj5.jpg',
-  '/projects/proj6.jpg',
 ]
 
 // Install: Pre-cache static assets

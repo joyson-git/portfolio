@@ -9,14 +9,14 @@ export default function MagicParticleCanvas() {
     const ctx = canvas.getContext('2d')
 
     let animationFrameId
-    let width = (canvas.width = window.innerWidth)
+    let width = (canvas.width = document.documentElement.clientWidth)
     let height = (canvas.height = window.innerHeight)
 
     let mouse = { x: -1000, y: -1000, active: false }
     let mouseTrail = []
 
     const handleResize = () => {
-      width = canvas.width = window.innerWidth
+      width = canvas.width = document.documentElement.clientWidth
       height = canvas.height = window.innerHeight
     }
 
@@ -96,14 +96,17 @@ export default function MagicParticleCanvas() {
     const render = () => {
       ctx.clearRect(0, 0, width, height)
 
+      const isLate = document.documentElement.getAttribute('data-newspaper-edition') === 'late'
+      const particleRgb = isLate ? '245, 240, 230' : '20, 20, 20'
+
       // 1. Draw Mouse Cursor Spotlight Glow
       if (mouse.active) {
         const auraGrad = ctx.createRadialGradient(
           mouse.x, mouse.y, 0,
           mouse.x, mouse.y, 220
         )
-        auraGrad.addColorStop(0, 'rgba(255, 255, 255, 0.06)')
-        auraGrad.addColorStop(0.5, 'rgba(255, 255, 255, 0.015)')
+        auraGrad.addColorStop(0, `rgba(${particleRgb}, 0.05)`)
+        auraGrad.addColorStop(0.5, `rgba(${particleRgb}, 0.015)`)
         auraGrad.addColorStop(1, 'rgba(0, 0, 0, 0)')
         ctx.fillStyle = auraGrad
         ctx.fillRect(0, 0, width, height)
@@ -138,11 +141,11 @@ export default function MagicParticleCanvas() {
 
         // Draw star point
         if (s.isSparkle && currentAlpha > 0.25) {
-          drawStar(s.x, s.y, 4, s.radius * 2.5, s.radius * 0.8, '#ffffff', Math.max(0, currentAlpha))
+          drawStar(s.x, s.y, 4, s.radius * 2.5, s.radius * 0.8, isLate ? '#f5f0e6' : '#141414', Math.max(0, currentAlpha * 0.7))
         } else {
           ctx.beginPath()
           ctx.arc(s.x, s.y, Math.max(0.5, s.radius), 0, Math.PI * 2)
-          ctx.fillStyle = `rgba(255, 255, 255, ${Math.max(0.08, currentAlpha)})`
+          ctx.fillStyle = `rgba(${particleRgb}, ${Math.max(0.06, currentAlpha * 0.6)})`
           ctx.fill()
         }
 
@@ -157,7 +160,7 @@ export default function MagicParticleCanvas() {
             ctx.beginPath()
             ctx.moveTo(s.x, s.y)
             ctx.lineTo(s2.x, s2.y)
-            ctx.strokeStyle = `rgba(255, 255, 255, ${(1 - dist / 120) * 0.06})`
+            ctx.strokeStyle = `rgba(${particleRgb}, ${(1 - dist / 120) * 0.05})`
             ctx.lineWidth = 0.7
             ctx.stroke()
           }
@@ -172,7 +175,7 @@ export default function MagicParticleCanvas() {
             ctx.beginPath()
             ctx.moveTo(s.x, s.y)
             ctx.lineTo(mouse.x, mouse.y)
-            ctx.strokeStyle = `rgba(255, 255, 255, ${(1 - mdist / 160) * 0.15})`
+            ctx.strokeStyle = `rgba(${particleRgb}, ${(1 - mdist / 160) * 0.12})`
             ctx.lineWidth = 1
             ctx.stroke()
           }
@@ -218,9 +221,13 @@ export default function MagicParticleCanvas() {
   return (
     <canvas
       ref={canvasRef}
+      className="magic-particle-canvas"
       style={{
         position: 'fixed',
         inset: 0,
+        width: '100%',
+        height: '100%',
+        display: 'block',
         pointerEvents: 'none',
         zIndex: 0,
         opacity: 0.95

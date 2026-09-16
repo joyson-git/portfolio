@@ -9,8 +9,8 @@ createRoot(document.getElementById('root')).render(
   </StrictMode>,
 )
 
-// Register Service Worker for 100% offline support
-if ('serviceWorker' in navigator) {
+// Service workers cache Vite source modules, so only enable offline support in production.
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js').catch((err) => {
       console.warn('Service Worker registration failed:', err)

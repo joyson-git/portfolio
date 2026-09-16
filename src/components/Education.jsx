@@ -23,39 +23,53 @@ export default function Education() {
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section className="education section" id="education" ref={ref}>
-      <motion.h2
-        className="section-title"
-        initial={{ opacity: 0, y: 30 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <span className="scs-gradient-text">Education &amp; Degrees.</span>
-      </motion.h2>
+    <section className="np-page-section" id="education" ref={ref}>
+      <div className="np-broadsheet-wrapper">
 
-      <motion.div
-        className="edu-boxed-container"
-        initial={{ opacity: 0, y: 40 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ delay: 0.15, duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-      >
-        {educationItems.map((edu, idx) => (
-          <div key={idx} className="edu-boxed-item">
-            <h3 className="edu-boxed-degree">{edu.degree}</h3>
+        {/* ── Broadsheet Folio Header ── */}
+        <div className="np-folio-header font-mono">
+          <span>PAGE 7A · ACADEMIC ARCHIVES &amp; CREDENTIALS</span>
+          <span>GENZ TIMES · PINTO EDITION</span>
+        </div>
 
-            {edu.score ? (
-              <div className="edu-boxed-score-badge mono">{edu.score}</div>
-            ) : (
-              <div className="edu-boxed-bar-dash" />
-            )}
+        <hr className="np-rule-thick" />
 
-            <div className="edu-boxed-inst">{edu.institution}</div>
-            <div className="edu-boxed-meta mono">
-              {edu.period} · {edu.location}
-            </div>
-          </div>
-        ))}
-      </motion.div>
+        <h2 className="np-section-headline font-headline">
+          ACADEMIC GAZETTE &amp; DEGREES
+        </h2>
+        <p className="np-section-deck font-serif">
+          Official engineering certifications and academic records in Information Science &amp; Computer Engineering.
+        </p>
+
+        <hr className="np-rule-double" />
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.4rem' }}>
+          {educationItems.map((edu, idx) => (
+            <motion.div
+              key={idx}
+              className="np-article-card"
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: idx * 0.1, duration: 0.8 }}
+            >
+              <div className="np-article-card__header font-mono">
+                <span>DEGREE RECORD</span>
+                {edu.score && <span className="np-article-card__stamp font-mono">{edu.score}</span>}
+              </div>
+
+              <h3 className="np-article-card__title font-serif">{edu.degree}</h3>
+              <div className="font-headline" style={{ color: 'var(--np-ink-muted)', fontSize: '1rem', marginBottom: '0.4rem' }}>
+                {edu.institution}
+              </div>
+              <div className="font-mono" style={{ fontSize: '0.74rem', color: 'var(--np-ink-muted)' }}>
+                {edu.period} · {edu.location}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+      </div>
     </section>
   )
 }
+

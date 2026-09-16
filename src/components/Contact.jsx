@@ -45,7 +45,7 @@ export default function Contact() {
     e.preventDefault()
 
     // 1. Honeypot check: If automated bot checked hidden field, drop silently
-    if (form.botcheck) {
+    if(form.botcheck) {
       setStatus('success')
       setForm({ name: '', email: '', message: '', botcheck: false })
       return
@@ -53,7 +53,7 @@ export default function Contact() {
 
     // 2. Rate-limiting check: Prevent spam submissions within 5 seconds
     const now = Date.now()
-    if (now - lastSubmitTime.current < 5000) {
+    if(now - lastSubmitTime.current < 5000) {
       return
     }
     lastSubmitTime.current = now
@@ -86,7 +86,7 @@ export default function Contact() {
 
       const data = await response.json()
 
-      if (data.success) {
+      if(data.success) {
         setStatus('success')
         setForm({ name: '', email: '', message: '', botcheck: false })
         setTimeout(() => setStatus('idle'), 5000)
@@ -107,124 +107,150 @@ export default function Contact() {
   }
 
   return (
-    <section className="contact section" id="contact" ref={ref}>
-      <motion.h2
-        className="section-title contact-title"
-        initial={{ opacity: 0, y: 30 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <span className="scs-gradient-text">Let&apos;s build something together.</span>
-      </motion.h2>
+    <section className="np-page-section" id="contact" ref={ref}>
+      <div className="np-broadsheet-wrapper">
 
-      <div className="contact-grid">
-        {/* Left Column: Direct Links */}
-        <motion.div
-          className="contact-info-col"
-          initial={{ opacity: 0, y: 40 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.1, duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <p className="contact-tagline">
-            Open to full-time, remote &amp; freelance work — free for the first few months.
-          </p>
+        {/* ── Broadsheet Folio Header ── */}
+        <div className="np-folio-header font-mono">
+          <span>PAGE 6 · THE CLASSIFIEDS &amp; LETTERS TO THE EDITOR</span>
+          <span>GENZ TIMES · PINTO EDITION</span>
+        </div>
 
-          <div className="contact-rows-list">
-            {contactMethods.map((item) => (
-              <motion.a
-                key={item.label}
-                href={item.href}
-                target="_blank"
-                rel="noreferrer"
-                className="contact-row"
-                onMouseEnter={playHover}
-                onClick={playClick}
-                whileHover={{ x: 6 }}
-                transition={{ duration: 0.2 }}
-              >
-                <div className="contact-row-left">
-                  <span className="contact-label mono">{item.label}</span>
-                  <span className="contact-val">{item.val}</span>
-                </div>
-                <span className="contact-arrow mono">↗</span>
-              </motion.a>
-            ))}
+        <hr className="np-rule-thick" />
+
+        <h2 className="np-section-headline font-headline">
+          CLASSIFIEDS &amp; LETTERS TO THE EDITOR
+        </h2>
+        <p className="np-section-deck font-serif">
+          Direct wire transmission, official classified inquiries, and urgent correspondence with the engineering newsroom.
+        </p>
+
+        <hr className="np-rule-double" />
+
+        <div className="np-classifieds-layout">
+          {/* Left: The Classifieds Coupon Box */}
+          <div className="np-classified-coupon">
+            <span className="np-coupon-cutout-tag font-mono">✂ CUT OUT &amp; KEEP</span>
+
+            <h3 className="font-headline" style={{ fontSize: '1.25rem', marginTop: '0.4rem', borderBottom: '2px solid var(--np-ink)', paddingBottom: '0.3rem', color: 'var(--np-ink)' }}>
+              SITUATIONS WANTED &amp; NOTICES
+            </h3>
+
+            <p className="font-body" style={{ fontSize: '0.9rem', lineHeight: 1.5, margin: '0.8rem 0', color: 'var(--np-ink-body)' }}>
+              <strong>SOFTWARE ARCHITECT &amp; AUTOMATION SPECIALIST</strong> available for high-throughput enterprise engagements, distributed microservices, and end-to-end quality assurance. Ready for immediate deployment.
+            </p>
+
+            <div className="np-classified-ad-grid">
+              {contactMethods.map(item => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="np-classified-ad"
+                  style={{ textDecoration: 'none', display: 'block' }}
+                  onMouseEnter={playHover}
+                  onClick={playClick}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                    <span>{item.icon}</span>
+                    <h4 style={{ margin: 0 }}>{item.label}</h4>
+                  </div>
+                  <p style={{ marginTop: '0.4rem' }}>{item.val}</p>
+                </a>
+              ))}
+            </div>
+
+            <div style={{ marginTop: '1.2rem', padding: '0.6rem', border: '1px solid var(--np-border)', background: 'var(--np-paper)', fontSize: '0.72rem', fontFamily: 'var(--np-font-mono)' }}>
+              <strong>HOME DELIVERY HOTLINE:</strong> (+91) 91486 17356<br />
+              <strong>LOCATION BUREAU:</strong> Bangalore, Karnataka, India
+            </div>
           </div>
-        </motion.div>
 
-        {/* Right Column: Message Form */}
-        <motion.div
-          className="contact-form-col"
-          initial={{ opacity: 0, y: 40 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.2, duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <form className="contact-form" onSubmit={submit}>
-            {/* Honeypot Spam Bot Trap */}
-            <input
-              type="checkbox"
-              name="botcheck"
-              style={{ display: 'none' }}
-              checked={form.botcheck}
-              onChange={handle}
-              tabIndex="-1"
-              autoComplete="off"
-            />
-            <div className="form-field">
-              <label className="form-label mono">YOUR NAME</label>
+          {/* Right: Telegram Dispatch Form */}
+          <div className="np-telegram-box">
+            <div className="np-telegram-header">
+              <div>
+                <h3 className="font-headline" style={{ fontSize: '1.4rem', margin: 0, color: 'var(--np-ink)' }}>
+                  LETTER TO THE EDITOR
+                </h3>
+                <span className="font-mono" style={{ fontSize: '0.68rem', color: 'var(--np-ink-muted)' }}>
+                  DIRECT CORRESPONDENCE TO JOYSON PINTO
+                </span>
+              </div>
+              <div className="np-telegram-stamp">
+                EDITORIAL DESK<br />BANGALORE
+              </div>
+            </div>
+
+            <form onSubmit={submit}>
+              {/* Honeypot Spam Bot Trap */}
               <input
-                type="text"
-                name="name"
-                value={form.name}
+                type="checkbox"
+                name="botcheck"
+                style={{ display: 'none' }}
+                checked={form.botcheck}
                 onChange={handle}
-                required
-                className="form-input"
-                placeholder="Enter your name"
+                tabIndex="-1"
+                autoComplete="off"
               />
-            </div>
 
-            <div className="form-field">
-              <label className="form-label mono">YOUR EMAIL</label>
-              <input
-                type="email"
-                name="email"
-                value={form.email}
-                onChange={handle}
-                required
-                className="form-input"
-                placeholder="name@company.com"
-              />
-            </div>
+              <div className="np-form-group">
+                <label className="np-form-label">SENDER NAME / TITLE</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={form.name}
+                  onChange={handle}
+                  required
+                  className="np-input font-mono"
+                  placeholder="Enter full name or newsroom title"
+                />
+              </div>
 
-            <div className="form-field">
-              <label className="form-label mono">MESSAGE</label>
-              <textarea
-                name="message"
-                value={form.message}
-                onChange={handle}
-                required
-                className="form-input form-textarea"
-                placeholder="Tell me about your project, role, or idea..."
-                rows={5}
-              />
-            </div>
+              <div className="np-form-group">
+                <label className="np-form-label">RETURN WIRE / EMAIL ADDRESS</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handle}
+                  required
+                  className="np-input font-mono"
+                  placeholder="name@company.com"
+                />
+              </div>
 
-            <motion.button
-              type="submit"
-              disabled={status === 'sending'}
-              className="form-submit"
-              whileHover={{ scale: status === 'sending' ? 1 : 1.01 }}
-              whileTap={{ scale: status === 'sending' ? 1 : 0.99 }}
-            >
-              {status === 'sending'
-                ? 'Sending Message...'
-                : status === 'success'
-                ? '✓ Message Sent!'
-                : 'Send Message →'}
-            </motion.button>
-          </form>
-        </motion.div>
+              <div className="np-form-group">
+                <label className="np-form-label">YOUR LETTER / CORRESPONDENCE</label>
+                <textarea
+                  name="message"
+                  value={form.message}
+                  onChange={handle}
+                  required
+                  className="np-textarea font-mono"
+                  placeholder="State your proposition, project specs, or engineering role..."
+                  rows={5}
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={status === 'sending'}
+                className="np-transmit-btn font-headline"
+              >
+                {status === 'sending'
+                  ? 'DELIVERING LETTER...'
+                  : status === 'success'
+                    ? '✓ LETTER DELIVERED TO EDITOR'
+                    : 'SEND LETTER ➔'}
+              </button>
+            </form>
+          </div>
+        </div>
+
       </div>
     </section>
   )
 }
+

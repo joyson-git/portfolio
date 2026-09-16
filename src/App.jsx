@@ -21,9 +21,28 @@ import './App.css'
 
 export default function App() {
   const [loaded, setLoaded] = useState(false)
+  const [showPage1, setShowPage1] = useState(false)
   const [cmdOpen, setCmdOpen] = useState(false)
   const [contactOpen, setContactOpen] = useState(false)
   const [showTopBtn, setShowTopBtn] = useState(false)
+  const [newspaperEdition, setNewspaperEdition] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('newspaper_edition') || 'morning'
+    }
+    return 'morning'
+  })
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-newspaper-edition', newspaperEdition)
+    try {
+      localStorage.setItem('newspaper_edition', newspaperEdition)
+    } catch {}
+  }, [newspaperEdition])
+
+  const toggleEdition = () => {
+    setNewspaperEdition(e => (e === 'morning' ? 'late' : 'morning'))
+  }
+
   const [isOffline, setIsOffline] = useState(
     typeof navigator !== 'undefined' ? !navigator.onLine : false
   )
@@ -71,22 +90,32 @@ export default function App() {
       <MagicParticleCanvas />
       <CommandPalette isOpen={cmdOpen} onClose={() => setCmdOpen(false)} />
 
-      {/* O-SCS Slide-in contact drawer — mounted once at root */}
+      {/* Slide-in contact drawer */}
       <ContactDrawer isOpen={contactOpen} onClose={() => setContactOpen(false)} />
 
       <AnimatePresence mode="wait">
-        {!loaded && <Loader key="loader" onDone={() => setLoaded(true)} />}
+        {(!loaded || showPage1) && (
+          <Loader
+            key={showPage1 ? 'page1-manual' : 'loader-initial'}
+            autoAdvance={!showPage1}
+            onDone={() => {
+              setLoaded(true)
+              setShowPage1(false)
+            }}
+          />
+        )}
       </AnimatePresence>
 
-      {loaded && (
-        <>
-          <Nav
+      <Nav
             onOpenCmd={() => setCmdOpen(true)}
             onOpenContact={() => setContactOpen(true)}
+            onOpenPage1={() => setShowPage1(true)}
+            edition={newspaperEdition}
+            onToggleEdition={toggleEdition}
           />
 
           <main>
-            {/* Hero and primary sections */}
+            {/* Front Page and inner newspaper pages */}
             <Hero onOpenContact={() => setContactOpen(true)} />
             <Projects />
             <Experience />
@@ -96,15 +125,15 @@ export default function App() {
             <Contact />
           </main>
 
-          {/* Floating Back-to-Top */}
+          {/* Floating Back-to-Top styled as newspaper folio */}
           <AnimatePresence>
             {showTopBtn && (
               <button
-                className="scroll-to-top-btn mono"
+                className="scroll-to-top-btn font-mono"
                 onClick={scrollToTop}
-                title="Back to Top"
+                title="Return to Page 1 Top"
               >
-                ↑ TOP
+                ↑ PAGE 1
               </button>
             )}
           </AnimatePresence>
@@ -112,17 +141,18 @@ export default function App() {
           <AIVoiceAgent />
 
           {isOffline && (
-            <div className="offline-banner mono">
+            <div className="offline-banner font-mono">
               <span className="dot pulse" style={{ background: '#f59e0b', boxShadow: '0 0 8px #f59e0b' }} />
-              <span>OFFLINE MODE ACTIVE · RUNNING FROM CACHE</span>
+              <span>GENZ TIMES WIRE: OFFLINE DISPATCH ACTIVE · RUNNING FROM CACHE</span>
             </div>
           )}
 
-          <footer className="footer">
-            <span className="mono">© 2025 Joyson Pinto. Bangalore, India.</span>
+          <footer className="np-imprint-footer font-mono">
+            <div>PRINTED &amp; PUBLISHED BY JOYSON PINTO · BANGALORE PRESS HOUSE, KARNATAKA, INDIA</div>
+            <div style={{ marginTop: '0.4rem', opacity: 0.7 }}>
+              GENZ TIMES &amp; PINTO CHRONICLE · FOUNDED 1890 · LATE CITY EDITION · ALL RIGHTS RESERVED © 1890–{new Date().getFullYear()}
+            </div>
           </footer>
-        </>
-      )}
     </>
   )
 }

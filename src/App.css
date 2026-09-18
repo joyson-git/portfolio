@@ -916,6 +916,456 @@
   z-index: 9998;
 }
 
+/* ===== VINTAGE PRINTING PRESS & INK ROLLER LOADER ===== */
+.np-press-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background: var(--np-bg);
+  color: var(--np-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 1.5rem;
+  user-select: none;
+}
+
+.np-press-paper-texture {
+  position: absolute;
+  inset: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* Registration marks in four corners */
+.np-reg-mark {
+  position: absolute;
+  font-family: var(--np-font-mono);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--np-ink);
+  opacity: 0.4;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.np-reg-top-left { top: 1rem; left: 1rem; }
+.np-reg-top-right { top: 1rem; right: 1rem; }
+.np-reg-bottom-left { bottom: 1rem; left: 1rem; }
+.np-reg-bottom-right { bottom: 1rem; right: 1rem; }
+
+/* Main Framed Container */
+.np-press-container {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: 820px;
+  background: var(--np-paper-card);
+  border: 2px solid var(--np-ink);
+  padding: 1.4rem 1.6rem;
+  box-shadow: 6px 6px 0px var(--np-ink);
+}
+
+/* Top Pressroom Control Bar */
+.np-press-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--np-ink);
+}
+
+.np-press-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.np-press-gear-spin {
+  display: inline-block;
+  font-size: 0.95rem;
+  animation: np-gear-rotate 4s linear infinite;
+}
+
+.np-press-pipe {
+  opacity: 0.4;
+}
+
+.np-press-tag {
+  color: var(--np-red);
+  letter-spacing: 0.06em;
+}
+
+.np-press-skip-btn {
+  font-family: var(--np-font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.35rem 0.85rem;
+  background: var(--np-ink);
+  color: var(--np-bg);
+  border: 1px solid var(--np-ink);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  letter-spacing: 0.04em;
+  transition: all 0.2s ease;
+  box-shadow: 2px 2px 0px var(--np-ink);
+}
+
+.np-press-skip-btn:hover {
+  background: var(--np-paper);
+  color: var(--np-ink);
+}
+
+.np-press-key-badge {
+  background: var(--np-red);
+  color: #ffffff;
+  font-size: 0.6rem;
+  padding: 0.08rem 0.35rem;
+  font-weight: 800;
+  border-radius: 2px;
+}
+
+/* Mechanical Rotary Press Visualizer */
+.np-press-visualizer {
+  border: 1px solid var(--np-border);
+  background: var(--np-paper);
+  padding: 0.85rem 1rem;
+  margin: 0.65rem 0 1rem;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.04);
+}
+
+.np-roller-assembly {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+.np-roller-gear {
+  width: 50px;
+  height: 50px;
+  color: var(--np-ink);
+  flex-shrink: 0;
+}
+
+.np-gear-svg {
+  width: 100%;
+  height: 100%;
+  animation: np-gear-rotate 3.5s linear infinite;
+}
+
+.np-gear-svg--reverse {
+  animation: np-gear-rotate-reverse 3.5s linear infinite;
+}
+
+@keyframes np-gear-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes np-gear-rotate-reverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+.np-cylinder-drum {
+  flex: 1;
+  height: 42px;
+  border: 2px solid var(--np-ink);
+  background: linear-gradient(180deg, #333 0%, #151515 45%, #252525 70%, #0d0d0d 100%);
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.2), 0 3px 6px rgba(0, 0, 0, 0.25);
+}
+
+.np-cylinder-ink-glaze {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.18) 50%, transparent 100%);
+  animation: np-glaze-sweep 2.4s infinite ease-in-out;
+}
+
+@keyframes np-glaze-sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.np-cylinder-label {
+  color: #f1f1f1;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  z-index: 2;
+  text-shadow: 0 1px 2px #000;
+  text-transform: uppercase;
+}
+
+/* Paper Feed Web */
+.np-paper-feed-sheet {
+  background: var(--np-paper-card);
+  border: 1px dashed var(--np-border);
+  padding: 0.65rem 0.9rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.np-feed-registration-strip {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.62rem;
+  font-weight: 800;
+  color: var(--np-red);
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--np-border-faint);
+  padding-bottom: 0.3rem;
+  margin-bottom: 0.45rem;
+}
+
+.np-sheet-printed-sample {
+  position: relative;
+  text-align: center;
+  padding: 0.25rem 0;
+}
+
+.np-sheet-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3.2rem;
+  font-weight: 900;
+  color: var(--np-ink);
+  opacity: 0.05;
+  pointer-events: none;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+.np-sheet-lead {
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: var(--np-ink);
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.np-sheet-sub {
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--np-ink-body);
+  margin-top: 0.25rem;
+}
+
+/* Press Masthead */
+.np-press-masthead {
+  text-align: center;
+  margin: 0.65rem 0 0.85rem;
+}
+
+.np-press-est {
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  color: var(--np-ink-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.15rem;
+}
+
+.np-press-title {
+  font-size: clamp(2.4rem, 5.2vw, 3.8rem);
+  font-weight: 900;
+  color: var(--np-ink);
+  line-height: 1;
+  margin: 0;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.08);
+}
+
+.np-press-subtitle {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--np-red);
+  margin-top: 0.25rem;
+  text-transform: uppercase;
+}
+
+/* Real-Time Linotype Status Telegraph */
+.np-linotype-box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--np-paper);
+  border: 1px solid var(--np-ink);
+  padding: 0.45rem 0.85rem;
+  margin: 0.65rem 0;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.08);
+}
+
+.np-linotype-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.64rem;
+  font-weight: 800;
+  color: var(--np-red);
+  letter-spacing: 0.08em;
+  flex-shrink: 0;
+  border-right: 1px solid var(--np-border-faint);
+  padding-right: 0.75rem;
+}
+
+.np-press-dot-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--np-red);
+  animation: pulse-dot 1s infinite;
+  display: inline-block;
+}
+
+.np-linotype-text {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--np-ink);
+  letter-spacing: 0.03em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Mechanical Ink Gauge */
+.np-press-gauge-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: 0.6rem;
+}
+
+.np-press-gauge-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--np-ink);
+  letter-spacing: 0.06em;
+}
+
+.np-press-pct {
+  color: var(--np-red);
+  font-size: 0.95rem;
+  font-weight: 900;
+}
+
+.np-press-gauge-track {
+  width: 100%;
+  height: 14px;
+  border: 2px solid var(--np-ink);
+  background: var(--np-paper);
+  position: relative;
+  overflow: visible;
+  box-shadow: 2px 2px 0px var(--np-ink);
+}
+
+.np-press-gauge-fill {
+  height: 100%;
+  background: repeating-linear-gradient(45deg, var(--np-ink), var(--np-ink) 8px, #333 8px, #333 16px);
+  transition: width 0.08s linear;
+}
+
+.np-press-gauge-roller-head {
+  position: absolute;
+  top: -4px;
+  width: 6px;
+  height: 22px;
+  background: var(--np-red);
+  border: 1px solid var(--np-ink);
+  transform: translateX(-50%);
+  transition: left 0.08s linear;
+  box-shadow: 0 0 4px rgba(176, 36, 36, 0.5);
+}
+
+.np-press-gauge-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.62rem;
+  color: var(--np-ink-muted);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-top: 0.15rem;
+}
+
+/* Footer Register Folio */
+.np-press-bottom-folio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.64rem;
+  font-weight: 700;
+  color: var(--np-ink-muted);
+  letter-spacing: 0.06em;
+  text-align: center;
+  flex-wrap: wrap;
+  margin-top: 0.35rem;
+}
+
+@media (max-width: 640px) {
+  .np-press-container {
+    padding: 1rem;
+    box-shadow: 4px 4px 0px var(--np-ink);
+  }
+  .np-press-topbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+  .np-press-skip-btn {
+    justify-content: center;
+  }
+  .np-roller-gear {
+    width: 36px;
+    height: 36px;
+  }
+  .np-cylinder-drum {
+    height: 34px;
+  }
+  .np-cylinder-label {
+    font-size: 0.56rem;
+  }
+  .np-feed-registration-strip span:nth-child(2),
+  .np-feed-registration-strip span:nth-child(3) {
+    display: none;
+  }
+  .np-sheet-lead {
+    font-size: 0.92rem;
+  }
+  .np-sheet-sub {
+    display: none;
+  }
+  .np-press-title {
+    font-size: 2.2rem;
+  }
+  .np-press-bottom-folio span:nth-child(2),
+  .np-press-bottom-folio span:nth-child(3) {
+    display: none;
+  }
+}
+
 /* ===== NEWSPAPER PRESS LOADER ===== */
 /* ==========================================================================
    FRONT-PAGE NEWSPAPER COVER / INITIAL EDITION (LOADER)

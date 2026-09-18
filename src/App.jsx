@@ -3,6 +3,7 @@ import { AnimatePresence } from 'framer-motion'
 import Lenis from 'lenis'
 
 import Loader from './components/Loader'
+import MarketReportModal from './components/MarketReportModal'
 import Cursor from './components/Cursor'
 import MagicParticleCanvas from './components/MagicParticleCanvas'
 import Nav from './components/Nav'
@@ -94,14 +95,17 @@ export default function App() {
       <ContactDrawer isOpen={contactOpen} onClose={() => setContactOpen(false)} />
 
       <AnimatePresence mode="wait">
-        {(!loaded || showPage1) && (
+        {!loaded && (
           <Loader
-            key={showPage1 ? 'page1-manual' : 'loader-initial'}
-            autoAdvance={!showPage1}
-            onDone={() => {
-              setLoaded(true)
-              setShowPage1(false)
-            }}
+            key="press-loader"
+            onDone={() => setLoaded(true)}
+          />
+        )}
+        {showPage1 && (
+          <MarketReportModal
+            key="page1-report"
+            autoAdvance={false}
+            onDone={() => setShowPage1(false)}
           />
         )}
       </AnimatePresence>

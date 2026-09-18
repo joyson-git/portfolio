@@ -137,7 +137,7 @@ export default function Hero({ onOpenContact }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          JOYSON PINTO: FULL-STACK DEVELOPER BUILDING FROM ZERO TO ONE
+           ZERO TO ONE · RESTLESSLY BUILDING SCALED SOFTWARE
         </motion.h1>
 
         {/* ── 1890 TELEGRAPH WIRE DISPATCH BULLETIN ── */}

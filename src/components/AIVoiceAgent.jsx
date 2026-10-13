@@ -3,12 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 const QUICK_PROMPTS = [
   'Who is Joyson Pinto?',
-  'Show featured projects',
-  'What is his tech stack?',
-  'Tell me about his experience',
-  'What is his education?',
-  'Any achievements or hackathons?',
-  'How to contact Joyson?'
+  'Featured projects',
+  'Technical stack & skills',
+  'Work experience',
+  'Education & degree',
+  'Hackathons & awards',
+  'Contact information'
 ]
 
 function playRadioCue(type = 'static') {
@@ -373,90 +373,140 @@ export default function AIVoiceAgent() {
         {isOpen && (
           <motion.div
             className="ai-voice-card"
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            initial={{ opacity: 0, scale: 0.94, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 15 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            exit={{ opacity: 0, scale: 0.94, y: 12 }}
+            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
           >
+            {/* Header */}
             <div className="ai-voice-card-header">
               <div className="ai-voice-header-left">
-                <span className="ai-voice-status-dot" />
-                <span className="ai-voice-title mono">NEWSROOM ASSISTANT · LIVE WIRE</span>
+                <span className={`ai-voice-status-dot ${isSpeaking ? 'ai-voice-status-dot--speaking' : isListening ? 'ai-voice-status-dot--listening' : ''}`} />
+                <div className="ai-voice-header-text">
+                  <div className="ai-voice-title font-mono">NEWSROOM ASSISTANT</div>
+                  <div className="ai-voice-subtitle font-mono">LIVE WIRE · EDITION 2026</div>
+                </div>
               </div>
-              <button className="ai-voice-close" onClick={toggleAgent}>✕</button>
+              <button
+                type="button"
+                className="ai-voice-close-btn"
+                onClick={toggleAgent}
+                title="Close Assistant"
+                aria-label="Close Assistant"
+              >
+                ✕
+              </button>
             </div>
 
             <div className="ai-voice-card-body">
-              <div className="ai-voice-visualizer-row">
-                <div className={`ai-voice-visualizer ${isSpeaking && !isPaused ? 'ai-voice-visualizer--speaking' : ''}`}>
-                  <span className="v-bar v1" />
-                  <span className="v-bar v2" />
-                  <span className="v-bar v3" />
-                  <span className="v-bar v4" />
-                  <span className="v-bar v5" />
+              {/* Telemetry / Audio Frequency Bar */}
+              <div className="ai-voice-telemetry-row">
+                <div className="ai-voice-telemetry-left">
+                  <div className={`ai-voice-equalizer ${isSpeaking && !isPaused ? 'ai-voice-equalizer--active' : isListening ? 'ai-voice-equalizer--listening' : ''}`}>
+                    <span className="eq-bar" />
+                    <span className="eq-bar" />
+                    <span className="eq-bar" />
+                    <span className="eq-bar" />
+                    <span className="eq-bar" />
+                  </div>
+                  <span className="ai-voice-status-label font-mono">
+                    {isListening
+                      ? 'RECORDING DISPATCH...'
+                      : isSpeaking && !isPaused
+                      ? 'TRANSMITTING VOICE...'
+                      : isPaused
+                      ? 'AUDIO PAUSED'
+                      : 'WIRE READY · STANDBY'}
+                  </span>
                 </div>
 
-                {/* Audio Controls: Pause/Resume + Stop */}
-                <div className="ai-voice-audio-controls">
-                  <button
-                    type="button"
-                    className="ai-voice-pause-btn"
-                    onClick={togglePauseSpeech}
-                    disabled={!isSpeaking && !isPaused}
-                    title={isPaused ? 'Resume speaking' : 'Pause speaking'}
-                  >
-                    {isPaused ? '▶ Resume' : '⏸ Pause'}
-                  </button>
-                  <button
-                    type="button"
-                    className="ai-voice-stop-btn"
-                    onClick={stopSpeech}
-                    disabled={!isSpeaking && !isPaused}
-                    title="Stop speaking"
-                  >
-                    ⏹ Stop
-                  </button>
-                </div>
+                {(isSpeaking || isPaused) && (
+                  <div className="ai-voice-audio-controls">
+                    <button
+                      type="button"
+                      className="ai-voice-ctrl-btn font-mono"
+                      onClick={togglePauseSpeech}
+                      title={isPaused ? 'Resume speaking' : 'Pause speaking'}
+                    >
+                      {isPaused ? '▶ RESUME' : '⏸ PAUSE'}
+                    </button>
+                    <button
+                      type="button"
+                      className="ai-voice-ctrl-btn font-mono"
+                      onClick={stopSpeech}
+                      title="Stop speaking"
+                    >
+                      ⏹ STOP
+                    </button>
+                  </div>
+                )}
               </div>
 
+              {/* Response Dispatch Box */}
               <div className={`ai-voice-response-box ${isInvalid ? 'ai-voice-response-box--invalid' : ''}`}>
-                <p className="ai-voice-text">{agentResponse}</p>
-                {isInvalid && (
-                  <p className="ai-voice-invalid-tag mono">NO MATCH IN THE NEWSROOM ARCHIVE</p>
-                )}
+                <div className="ai-voice-dispatch-top font-mono">
+                  <span>DISPATCH TAPE · WIRE #1890</span>
+                  <span className="ai-voice-badge">OFFICIAL WIRE</span>
+                </div>
+
                 {transcript && (
-                  <p className="ai-voice-transcript mono">You asked: "{transcript}"</p>
+                  <div className="ai-voice-query-pill font-mono">
+                    <span className="ai-voice-query-label">YOU:</span>
+                    <span className="ai-voice-query-val">"{transcript}"</span>
+                  </div>
+                )}
+
+                <div className="ai-voice-text-content">
+                  <p className="ai-voice-text">{agentResponse}</p>
+                </div>
+
+                {isInvalid && (
+                  <div className="ai-voice-invalid-stamp font-mono">
+                    ⚠ ARCHIVE MISS · TOPIC NOT FOUND IN CURRENT CHRONICLE
+                  </div>
                 )}
               </div>
 
+              {/* Input Form Row */}
               <form className="ai-voice-input-row" onSubmit={handleTextSubmit}>
                 <input
                   type="text"
-                  className="ai-voice-text-input mono"
-                  placeholder="Ask the newsroom..."
+                  className="ai-voice-text-input font-mono"
+                  placeholder="Ask skills, background, projects..."
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
                 />
-                <button type="submit" className="ai-voice-send-btn" title="Send Question">
-                  Send
-                </button>
                 <button
                   type="button"
-                  className={`ai-voice-mic-icon-btn ${isListening ? 'ai-voice-mic-icon-btn--active' : ''}`}
+                  className={`ai-voice-mic-btn font-mono ${isListening ? 'ai-voice-mic-btn--active' : ''}`}
                   onClick={startVoiceInput}
-                  title="Start Voice Dispatch"
+                  title="Voice Input"
                 >
-                  {isListening ? 'LISTENING…' : 'VOICE'}
+                  <span className="ai-voice-mic-dot" />
+                  <span>{isListening ? 'REC' : 'VOICE'}</span>
+                </button>
+                <button
+                  type="submit"
+                  className={`ai-voice-send-btn font-mono ${inputText.trim() ? 'ai-voice-send-btn--active' : ''}`}
+                  title="Send Question"
+                  disabled={!inputText.trim()}
+                >
+                  ➔
                 </button>
               </form>
 
+              {/* Frequent Shortcuts */}
               <div className="ai-voice-prompts">
-                <span className="ai-voice-prompts-label mono">NEWSROOM SHORTCUTS</span>
+                <div className="ai-voice-prompts-label font-mono">
+                  <span>SUGGESTED DISPATCH INQUIRIES</span>
+                  <span style={{ opacity: 0.6 }}>TAP TO ASK</span>
+                </div>
                 <div className="ai-voice-chips">
                   {QUICK_PROMPTS.map((prompt) => (
                     <button
                       key={prompt}
-                      className="ai-voice-chip mono"
+                      type="button"
+                      className="ai-voice-chip font-mono"
                       onClick={() => handleUserQuery(prompt)}
                     >
                       {prompt}

@@ -43,7 +43,7 @@ export default function Hero({ onOpenContact }) {
 
         {/* ── Broadsheet Folio Header ── */}
         <div className="np-folio-header font-mono" style={{ marginBottom: '0.6rem' }}>
-          <span>PAGE 2 · LEAD STORY &amp; BUILDER'S CHRONICLE</span>
+          <span>PAGE 1 · LEAD STORY &amp; BUILDER'S CHRONICLE</span>
           <span>GENZ TIMES · PINTO EDITION</span>
         </div>
 
@@ -123,7 +123,7 @@ export default function Hero({ onOpenContact }) {
         {/* ── DATELINE BAR WITH DOUBLE RULES ── */}
         <hr className="np-rule-double" />
         <div className="np-dateline-bar font-mono">
-          <span>VOL. I NO. 142 · PAGE 2</span>
+          <span>VOL. I NO. 142 · PAGE 1</span>
           <span>ESTABLISHED 1890 · LATE CITY EDITION</span>
           <span>SPECIAL DISPATCH · WORLDWIDE CIRCULATION</span>
           <span>PRICE: TWO PENCE · OPEN TO HIRE</span>

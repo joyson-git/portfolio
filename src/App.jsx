@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import Lenis from 'lenis'
 
-import Loader from './components/Loader'
-import MarketReportModal from './components/MarketReportModal'
 import Cursor from './components/Cursor'
 import MagicParticleCanvas from './components/MagicParticleCanvas'
 import Nav from './components/Nav'
@@ -21,8 +19,6 @@ import AIVoiceAgent from './components/AIVoiceAgent'
 import './App.css'
 
 export default function App() {
-  const [loaded, setLoaded] = useState(false)
-  const [showPage1, setShowPage1] = useState(false)
   const [cmdOpen, setCmdOpen] = useState(false)
   const [contactOpen, setContactOpen] = useState(false)
   const [showTopBtn, setShowTopBtn] = useState(false)
@@ -66,7 +62,6 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    if (!loaded) return
     const lenis = new Lenis({
       duration: 1.4,
       easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
@@ -81,7 +76,7 @@ export default function App() {
     }
     requestAnimationFrame(raf)
     return () => lenis.destroy()
-  }, [loaded])
+  }, [])
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
@@ -94,29 +89,12 @@ export default function App() {
       {/* Slide-in contact drawer */}
       <ContactDrawer isOpen={contactOpen} onClose={() => setContactOpen(false)} />
 
-      <AnimatePresence mode="wait">
-        {!loaded && (
-          <Loader
-            key="press-loader"
-            onDone={() => setLoaded(true)}
-          />
-        )}
-        {showPage1 && (
-          <MarketReportModal
-            key="page1-report"
-            autoAdvance={false}
-            onDone={() => setShowPage1(false)}
-          />
-        )}
-      </AnimatePresence>
-
       <Nav
-            onOpenCmd={() => setCmdOpen(true)}
-            onOpenContact={() => setContactOpen(true)}
-            onOpenPage1={() => setShowPage1(true)}
-            edition={newspaperEdition}
-            onToggleEdition={toggleEdition}
-          />
+        onOpenCmd={() => setCmdOpen(true)}
+        onOpenContact={() => setContactOpen(true)}
+        edition={newspaperEdition}
+        onToggleEdition={toggleEdition}
+      />
 
           <main>
             {/* Front Page and inner newspaper pages */}

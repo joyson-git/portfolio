@@ -3,15 +3,14 @@ import { motion, useScroll } from 'framer-motion'
 import { playHover, playClick } from '../utils/soundEffects'
 
 const NAV_LINKS = [
-  { label: 'P1. Market Report', href: '#market-report', isPage1: true },
-  { label: 'P2. Lead Story', href: '#hero' },
-  { label: 'P3. Investigations', href: '#projects' },
-  { label: 'P4. Chronicles', href: '#experience' },
-  { label: 'P5. Commodities', href: '#skills' },
-  { label: 'P6. Classifieds', href: '#contact' },
+  { label: 'P1. Lead Story', href: '#hero' },
+  { label: 'P2. Investigations', href: '#projects' },
+  { label: 'P3. Chronicles', href: '#experience' },
+  { label: 'P4. Commodities', href: '#skills' },
+  { label: 'P5. Classifieds', href: '#contact' },
 ]
 
-export default function Nav({ onOpenCmd, onOpenContact, onOpenPage1, edition = 'morning', onToggleEdition }) {
+export default function Nav({ onOpenCmd, onOpenContact, edition = 'morning', onToggleEdition }) {
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
   const { scrollYProgress } = useScroll()
@@ -62,7 +61,7 @@ export default function Nav({ onOpenCmd, onOpenContact, onOpenPage1, edition = '
           {/* Center: Broadsheet Page Index Links */}
           <nav className="np-running-header__nav" aria-label="Newspaper sections">
             {NAV_LINKS.map((link) => {
-              if (link.isPage1) {
+              if(link.isPage1) {
                 return (
                   <button
                     key={link.label}

@@ -348,7 +348,7 @@ console.log(active.name)`}
 
             <div className="np-hero-action-row">
               <a
-                href="http://129.225.69.56/"
+                href="http://129.225.81.252/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="np-stamp-btn np-stamp-btn--primary font-mono"

@@ -11,7 +11,7 @@ const projects = [
     desc: 'Full stack e-commerce backend platform built with Java, Spring Boot, Microservices, Spring Security, JWT, MongoDB, Eureka Server, and API Gateway. Features role-based access control and decoupled service architecture.',
     tech: ['Java', 'Spring Boot', 'Spring Security', 'JWT', 'MongoDB', 'Eureka', 'Microservices'],
     link: 'https://github.com/joyson-git/Ecommer-Spring-boot-backend',
-    live: 'http://129.225.69.56/',
+    live: 'http://129.225.81.252/',
     category: 'Backend & Microservices',
     badge: 'MICROSERVICE SYSTEM',
     highlight: 'Decoupled Eureka Gateway & JWT Auth',

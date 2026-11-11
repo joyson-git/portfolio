@@ -162,7 +162,7 @@ export default function Hero({ onOpenContact }) {
 
             <div className="np-subhead font-serif">From Code to Impact</div>
             <div className="np-article-body">
-              With experience in Java, Spring Boot, Angular, Node.js, AI tools, and test automation, he turns complex requirements into practical software that delivers measurable results.
+              With experience in Java, Spring Boot, Vue 3, Node.js, AI tools, and test automation, he turns complex requirements into practical software that delivers measurable results.
             </div>
 
             <div className="np-wire-bulletin" style={{ width: '100%', marginTop: '1rem' }}>
@@ -243,13 +243,12 @@ console.log(active.name)`}
             {/* Vintage Action Buttons */}
             <div className="np-hero-action-row">
               <a
-                href="/Joyson_Pinto_FullStackDeveloper_Resume.pdf"
-                download="Joyson_Pinto_FullStackDeveloper_Resume.pdf"
+                href="https://drive.google.com/drive/folders/1Ver0FBHNnaooAVF-wEyxP7EU6BNHwngi?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="np-stamp-btn np-stamp-btn--primary font-mono"
               >
-                <span>Download Resume (PDF) ↓</span>
+                <span>Resume (PDF) ↗</span>
               </a>
               <a
                 href="https://github.com/joyson-git"

@@ -1,13 +1,10 @@
 /**
- * Synchronously triggers a download/open for Joyson's resume.
+ * Opens Joyson's resume folder on Google Drive.
  */
 export function downloadResumePDF() {
-  const link = document.createElement('a')
-  link.href = '/Joyson_Pinto_FullStackDeveloper_Resume.pdf'
-  link.download = 'Joyson_Pinto_FullStackDeveloper_Resume.pdf'
-  link.target = '_blank'
-  link.rel = 'noopener noreferrer'
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
+  window.open(
+    'https://drive.google.com/drive/folders/1Ver0FBHNnaooAVF-wEyxP7EU6BNHwngi?usp=sharing',
+    '_blank',
+    'noopener,noreferrer'
+  )
 }

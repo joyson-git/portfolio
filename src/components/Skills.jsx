@@ -28,7 +28,7 @@ const skillCategories = [
     cat: 'FRONTEND',
     icon: '🎨',
     items: [
-      { name: 'Angular', icon: '🅰️' },
+      { name: 'Vue 3', icon: '💚' },
       { name: 'HTML', icon: '🌐' },
       { name: 'CSS', icon: '🎨' },
       { name: 'State Management', icon: '🔄' },

@@ -29,9 +29,16 @@ export default function ProjectModal({ project, onClose }) {
             <div className="proj-modal-section">
               <h4 className="proj-modal-subtitle mono">&gt; ARCHITECTURAL HIGHLIGHTS</h4>
               <ul className="proj-modal-list">
-                <li>Decoupled microservice architecture with independent scaling and isolated failure boundaries.</li>
-                <li>Secure RESTful communication using JWT authentication and Spring Security role-based access control.</li>
-                <li>High-throughput data storage with optimized indexing in MongoDB &amp; MySQL.</li>
+                {(project.points && project.points.length > 0
+                  ? project.points
+                  : [
+                      'Decoupled microservice architecture with independent scaling and isolated failure boundaries.',
+                      'Secure RESTful communication using JWT authentication and Spring Security role-based access control.',
+                      'MongoDB-per-service persistence with Eureka discovery and API Gateway edge routing.',
+                    ]
+                ).map(point => (
+                  <li key={point}>{point}</li>
+                ))}
               </ul>
             </div>
 

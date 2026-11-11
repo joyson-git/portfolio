@@ -69,21 +69,21 @@ const KNOWLEDGE_BASE = [
     keywords: ['who is joyson', 'who are you', 'about joyson', 'about you', 'who', 'introduce'],
     section: 'about',
     reply:
-      "Joyson Pinto is a Full Stack Developer based in Bangalore, India. He builds healthcare web applications using Angular, Node.js, Express dot js, and MongoDB, with strong backend fundamentals in Java and Spring Boot, plus experience in test automation and performance testing."
+      "Joyson Pinto is a Full Stack Developer based in Bangalore, India. He builds healthcare web applications using Vue 3, Node.js, Express dot js, and MongoDB, with strong backend fundamentals in Java and Spring Boot, plus experience in test automation and performance testing."
   },
   {
     id: 'current-role',
     keywords: ['current job', 'current role', 'where does he work', 'current company', 'teslon', 'present job'],
     section: 'experience',
     reply:
-      "Since June 2025, Joyson has been working as a Full Stack Developer at Teslon Technology in Bangalore, building healthcare web applications end to end."
+      "Since February 2026, Joyson has been a QA Automation Engineer and Server Engineer at Teslon Technology in Bangalore. Before that, from June 2025 to January 2026, he was a Software Developer there building Vue 3 UIs and Node.js APIs for hospital workflows."
   },
   {
     id: 'experience',
     keywords: ['experience', 'work history', 'career', 'job history', 'employment'],
     section: 'experience',
     reply:
-      "Joyson has about a year of professional experience. He's currently a Full Stack Developer at Teslon Technology since June 2025, building healthcare apps with Angular, Node.js, and MongoDB, plus test automation with Playwright and WebdriverIO. Before that, he interned as a Software Engineer at Ekathva Innovations from August to December 2022, where he built a Student Result Management System with Java and improved performance by 30 percent."
+      "Joyson is currently a QA Automation Engineer and Server Engineer at Teslon Technology since February 2026. From June 2025 to January 2026 he was a Software Developer there, optimizing Node.js APIs and building Vue 3 hospital admin UIs. Before that, he interned as a Software Engineer at Ekathva Innovations from August to December 2022."
   },
   {
     id: 'internship',
@@ -97,7 +97,7 @@ const KNOWLEDGE_BASE = [
     keywords: ['healthcare', 'hospital', 'patient'],
     section: 'experience',
     reply:
-      "At Teslon Technology, Joyson develops healthcare web applications for hospitals and patients — building dynamic Angular UIs and RESTful APIs with Node dot js, Express, and MongoDB to handle patient data and hospital workflows."
+      "As a Software Developer at Teslon Technology, Joyson fixed production issues, shipped new hospital admin features in Vue 3, and wrote Node.js, Express, and MongoDB REST APIs. He now focuses on QA automation, security testing, and server engineering across AWS and Oracle Cloud."
   },
   {
     id: 'ai-llm',
@@ -111,21 +111,21 @@ const KNOWLEDGE_BASE = [
     keywords: ['test automation', 'testing', 'playwright', 'webdriverio', 'artillery', 'load testing', 'qa', 'quality assurance'],
     section: 'skills',
     reply:
-      "Joyson builds end-to-end test automation suites with Playwright and WebdriverIO to catch regressions in critical flows, and runs load and performance testing with Artillery to identify API bottlenecks and ensure stability under high concurrency."
+      "As a QA Automation Engineer, Joyson built end-to-end and mobile automation frameworks with WebdriverIO and Playwright, raising coverage by 40 percent and cutting manual QA effort by 60 percent. He also runs Artillery load tests, Burp Suite security testing, Jenkins CI/CD quality gates, and uses MCP to speed up automation delivery by over 50 percent."
   },
   {
     id: 'projects',
     keywords: ['project', 'portfolio', 'repo', 'built', 'ecommerce', 'e-commerce'],
     section: 'projects',
     reply:
-      "One of Joyson's key projects is an E-Commerce application built with Java, Spring Boot, and a microservices architecture — including Product, Category, Cart, Order, Payment, and Search services, JWT-based authentication, and role-based authorization using Spring Security, Eureka Server, and an API Gateway. It's on his GitHub. Let me take you to the projects section."
+      "Joyson's flagship project is Gully Store, an e-commerce Spring Boot microservices platform still in progress. It has 12 services with Eureka, API Gateway JWT RBAC, MongoDB per service, Kafka-ready notifications, Docker Compose, and Jenkins CI/CD. Customer flows for auth, catalog, cart, and order save already work; full checkout orchestration is being finished. Let me take you there."
   },
   {
     id: 'skills',
     keywords: ['skill', 'stack', 'language', 'tech', 'technologies', 'tools'],
     section: 'skills',
     reply:
-      "Joyson's core stack spans Java and JavaScript for languages; Spring Boot, Node dot js, Express dot js, and microservices for backend; Angular, HTML, and CSS for frontend; MongoDB and MySQL for databases; Playwright, WebdriverIO, and Artillery for testing; and Git, Postman, Swagger, AWS, and MCP for tooling."
+      "Joyson's core stack spans Java and JavaScript for languages; Spring Boot, Node dot js, Express dot js, and microservices for backend; Vue 3, HTML, and CSS for frontend; MongoDB and MySQL for databases; Playwright, WebdriverIO, and Artillery for testing; and Git, Postman, Swagger, AWS, and MCP for tooling."
   },
   {
     id: 'education',
@@ -160,7 +160,7 @@ const KNOWLEDGE_BASE = [
     keywords: ['resume', 'cv', 'download resume', 'curriculum vitae', 'pdf'],
     section: null,
     reply:
-      "You can download Joyson's full PDF resume directly from the top navigation bar, the hero section, or by pressing Command K on your keyboard."
+      "You can open Joyson's resume PDF from the Google Drive folder via the top navigation bar, the hero section, or by pressing Command K on your keyboard."
   },
   {
     id: 'location',

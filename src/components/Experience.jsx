@@ -4,20 +4,33 @@ import TiltCard from './TiltCard'
 
 const jobs = [
   {
-    title: 'Full Stack Developer',
+    title: 'QA Automation Engineer ',
     company: 'Teslon Technology',
-    period: 'June 2025 – Present',
+    period: 'Feb 2026 – Present',
     location: 'Bangalore, India',
     points: [
-      'Developed and maintained healthcare web applications using Angular for dynamic UI rendering and state management, serving hospitals and patients.',
-      'Built RESTful APIs with Node.js, Express.js, and MongoDB (Mongoose) to handle patient data, hospital operations, and healthcare workflows.',
-      'Engineered end-to-end test automation suites using Playwright and WebdriverIO, catching regressions across critical patient-facing flows and improving release confidence.',
-      'Conducted load and performance testing using Artillery, identifying API bottlenecks and ensuring system stability under high concurrency.',
-      'Implemented Retrieval-Augmented Generation (RAG) pipelines using Ollama for localized LLM interactions and integrated speech-to-text capabilities to enhance user accessibility.',
-      'Evaluated and optimized LLM application performance using Ragas framework to measure faithfulness, answer relevance, and context precision.',
-      'Used AI-assisted development via MCP (Model Context Protocol) server integration to accelerate automation script generation and speed up delivery.',
+      'Built end-to-end and mobile test automation frameworks from scratch using WebdriverIO and Playwright, increasing test coverage by 40% and cutting manual QA effort by 60%.',
+      'Designed load testing pipelines with Artillery and performed security testing with Burp Suite Professional, identifying API bottlenecks and vulnerabilities while validating stability under a 30% increase in concurrent users.',
+      'Deployed and maintained applications on AWS and Oracle Cloud (OCI) using Linux (Ubuntu) servers, with Nginx as web server and reverse proxy including SSL/TLS setup.',
+      'Built CI/CD pipelines with Jenkins, automating build, test, and deployment with automated test suites as quality gates before release.',
+      'Containerized applications with Docker to keep environments consistent across development, testing, and production, simplifying deployments and rollbacks.',
+      'Handled server administration and monitoring, including shell scripting, log analysis, firewall and security group configuration, and production troubleshooting.',
+      'Used Model Context Protocol (MCP) servers with AI-assisted coding to speed up automation script delivery by over 50%.',
     ],
-    tech: ['Angular', 'Node.js', 'Express.js', 'MongoDB', 'Playwright', 'WebdriverIO', 'Artillery', 'RAG / Ollama', 'MCP AI Protocol'],
+    tech: ['WebdriverIO', 'Playwright', 'Artillery', 'Burp Suite', 'AWS', 'Oracle Cloud (OCI)', 'Linux', 'Nginx', 'Jenkins', 'Docker', 'MCP'],
+  },
+  {
+    title: 'Software Developer',
+    company: 'Teslon Technology',
+    period: 'Jun 2025 – Jan 2026',
+    location: 'Bangalore, India',
+    points: [
+      'Owned end-to-end feature delivery for hospital administration workflows — from requirements to production — writing new Vue 3 UI features and supporting REST APIs.',
+      'Designed and implemented Node.js, Express.js, and MongoDB REST APIs for patient data, hospital operations, and admin workflows.',
+      'Debugged and fixed production issues across frontend and backend, improving reliability and reducing recurring defects.',
+      'Built responsive Vue 3 interfaces that improved page load speed and usability for hospital staff.',
+    ],
+    tech: ['Vue 3', 'Node.js', 'Express.js', 'MongoDB'],
   },
   {
     title: 'Software Engineer Intern',
@@ -43,7 +56,7 @@ export default function Experience() {
 
         {/* ── Broadsheet Folio Header ── */}
         <div className="np-folio-header font-mono">
-          <span>PAGE 4 · INDUSTRIAL DISPATCHES &amp; CHRONICLES</span>
+          <span>PAGE 2 · INDUSTRIAL DISPATCHES &amp; CHRONICLES</span>
           <span>GENZ TIMES · PINTO EDITION</span>
         </div>
 

@@ -8,9 +8,9 @@ const systemNodes = [
     title: 'Client Layer',
     badge: 'FRONTEND',
     icon: '🅰️',
-    tech: 'Angular 18 & React',
+    tech: 'Vue 3 & React',
     latency: '< 10ms',
-    desc: 'Responsive healthcare web applications & dynamic dashboards built with Angular state management.',
+    desc: 'Responsive healthcare web applications & dynamic dashboards built with Vue 3 composition API.',
   },
   {
     id: 'gateway',

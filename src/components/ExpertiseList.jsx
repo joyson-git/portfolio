@@ -4,8 +4,8 @@ const EXPERTISE = [
   {
     num: '01',
     title: 'Full-Stack Architecture',
-    desc: 'End-to-end web applications with Java / Spring Boot backends and Angular / React frontends — built to scale and easy to maintain.',
-    tags: ['Java', 'Spring Boot', 'Angular', 'Node.js'],
+    desc: 'End-to-end web applications with Java / Spring Boot backends and Vue 3 / React frontends — built to scale and easy to maintain.',
+    tags: ['Java', 'Spring Boot', 'Vue 3', 'Node.js'],
   },
   {
     num: '02',

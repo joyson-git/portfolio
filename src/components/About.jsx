@@ -33,7 +33,7 @@ export default function About() {
         {/* Text */}
         <div className="about-content">
           {[
-            `Full Stack Developer building healthcare web apps with Angular, Node.js, Express.js, and MongoDB.`,
+            `Full Stack Developer building healthcare web apps with Vue 3, Node.js, Express.js, and MongoDB.`,
             `Strong backend foundation in Java, Spring Boot microservices, REST APIs, and automated testing with Playwright & WebdriverIO.`,
             `Open to remote & freelance projects — ready to work for free for the first few months to prove my skills and build trust.`,
           ].map((p, i) => (

@@ -4,20 +4,60 @@ import TiltCard from './TiltCard'
 import ProjectModal from './ProjectModal'
 import { playHover, playClick } from '../utils/soundEffects'
 
+const flagshipProject = {
+  num: '01',
+  title: 'Gully Store',
+  subtitle: 'E-Commerce Spring Boot Microservices',
+  desc: 'Enterprise e-commerce platform with 12 Spring Boot microservices behind a Spring Cloud API Gateway, Netflix Eureka discovery, MongoDB-per-service data ownership, and a glassmorphic SPA frontend.',
+  tech: [
+    'Java 21',
+    'Spring Boot 3.2',
+    'Spring Cloud Gateway',
+    'Netflix Eureka',
+    'Spring Security',
+    'JWT / RBAC',
+    'MongoDB',
+    'RestTemplate (lb)',
+    'Apache Kafka',
+    'ZooKeeper',
+    'Docker Compose',
+    'Jenkins CI/CD',
+    'Nginx',
+    'HTML / CSS / JS',
+  ],
+  link: 'https://github.com/joyson-git/Ecommer-Spring-boot-backend',
+  live: 'http://129.225.81.252/',
+  category: 'Flagship · Backend & Microservices',
+  badge: 'FLAGSHIP BUILD',
+  status: 'IN PROGRESS',
+  highlight: '12 services · Gateway JWT RBAC · Docker + Jenkins deploy',
+  image: '/proj_microservices.webp',
+  imageCaption: 'Fig. I — The Distributed Services Architecture, Anno 1893',
+  services: [
+    'Eureka',
+    'API Gateway',
+    'Auth',
+    'Product',
+    'Category',
+    'Cart',
+    'Order',
+    'Payment',
+    'Search',
+    'Notification',
+    'Inventory',
+    'Delivery',
+  ],
+  points: [
+    '12-module Maven monorepo of Spring Boot 3 / Spring Cloud services on Java 21.',
+    'Eureka discovery + API Gateway with JWT validation and RBAC (CUSTOMER, STORE_ADMIN, ADMIN, DELIVERY_PARTNER).',
+    'MongoDB-per-service data ownership for Auth, Catalog, Cart, Order, Payment, Inventory, and Delivery.',
+    'Load-balanced RestTemplate calls: Cart → Product, Search → Product, Order → Cart / Product / Payment.',
+    'Kafka + ZooKeeper wired for OrderPlacedEvent → Notification (producer path still being completed).',
+    'Docker Compose + Jenkins CI/CD deploys MongoDB, Kafka, Eureka, Gateway, services, and Nginx frontend.',
+  ],
+}
+
 const projects = [
-  {
-    num: '01',
-    title: 'E-Commerce Spring Boot Microservices',
-    desc: 'Full stack e-commerce backend platform built with Java, Spring Boot, Microservices, Spring Security, JWT, MongoDB, Eureka Server, and API Gateway. Features role-based access control and decoupled service architecture.',
-    tech: ['Java', 'Spring Boot', 'Spring Security', 'JWT', 'MongoDB', 'Eureka', 'Microservices'],
-    link: 'https://github.com/joyson-git/Ecommer-Spring-boot-backend',
-    live: 'http://129.225.81.252/',
-    category: 'Backend & Microservices',
-    badge: 'MICROSERVICE SYSTEM',
-    highlight: 'Decoupled Eureka Gateway & JWT Auth',
-    image: '/proj_microservices.webp',
-    imageCaption: 'Fig. I — The Distributed Services Architecture, Anno 1893'
-  },
   {
     num: '02',
     title: 'AI-Powered Email Auto-Reply Generator',
@@ -112,7 +152,6 @@ export default function Projects() {
       <div className="np-broadsheet-wrapper">
         <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
 
-        {/* ── Broadsheet Folio Header ── */}
         <div className="np-folio-header font-mono">
           <span>PAGE 3 · SPECIAL INVESTIGATIVE DISPATCHES</span>
           <span>GENZ TIMES · PINTO EDITION</span>
@@ -120,18 +159,113 @@ export default function Projects() {
 
         <hr className="np-rule-thick" />
 
+        {/* ── FLAGSHIP / IN-PROGRESS FEATURE ── */}
+        <motion.article
+          className="np-flagship"
+          initial={{ opacity: 0, y: 28 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="np-flagship__masthead font-mono">
+            <span>EXTRA · FLAGSHIP SYSTEM</span>
+            <span className="np-flagship__status">{flagshipProject.status}</span>
+          </div>
+
+          <div className="np-flagship__hero">
+            <div className="np-flagship__intro">
+              <p className="np-flagship__kicker font-mono">{flagshipProject.category}</p>
+              <h2 className="np-flagship__title font-headline">{flagshipProject.title}</h2>
+              {flagshipProject.subtitle && (
+                <p className="np-flagship__subtitle font-serif">{flagshipProject.subtitle}</p>
+              )}
+              <p className="np-flagship__deck font-serif">{flagshipProject.desc}</p>
+              <div className="np-flagship__highlight font-mono">
+                <span className="highlight-dot" /> {flagshipProject.highlight}
+              </div>
+              <div className="np-flagship__actions">
+                <button
+                  className="project-card-inspect-btn mono"
+                  onClick={() => { playClick(); setSelectedProject(flagshipProject) }}
+                  onMouseEnter={playHover}
+                >
+                  Inspect 🔍
+                </button>
+                {flagshipProject.live && (
+                  <a
+                    href={flagshipProject.live}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="project-card-live-btn mono"
+                    title="Live Deployment"
+                  >
+                    Live ⚡
+                  </a>
+                )}
+                <a
+                  href={flagshipProject.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="project-card-github-btn mono"
+                  title="GitHub Repository"
+                >
+                  GitHub ↗
+                </a>
+              </div>
+            </div>
+
+            <figure className="np-flagship__figure">
+              <img
+                src={flagshipProject.image}
+                alt={flagshipProject.title}
+              />
+              <figcaption className="font-mono">{flagshipProject.imageCaption}</figcaption>
+            </figure>
+          </div>
+
+          <div className="np-flagship__body">
+            <p className="np-flagship__services-label font-mono">Engineering notes</p>
+            <ul className="np-flagship__points">
+              {flagshipProject.points.map(point => (
+                <li key={point} className="font-body">{point}</li>
+              ))}
+            </ul>
+
+            <div className="np-flagship__meta">
+              <div className="np-flagship__meta-block">
+                <p className="np-flagship__services-label font-mono">Service map</p>
+                <div className="np-flagship__service-row">
+                  {flagshipProject.services.map(s => (
+                    <span key={s} className="np-flagship__service font-mono">{s}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="np-flagship__meta-block">
+                <p className="np-flagship__services-label font-mono">Technology</p>
+                <div className="np-flagship__service-row">
+                  {flagshipProject.tech.map(t => (
+                    <span key={t} className="np-flagship__tech font-mono">{t}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.article>
+
+        <hr className="np-rule-double" />
+
+        {/* ── OTHER PROJECTS ARCHIVE ── */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', margin: '0.6rem 0 1rem' }}>
           <div>
             <h2 className="np-section-headline font-headline">
-              MAJOR SOFTWARE BREAKTHROUGHS &amp; SYSTEMS
+              FIELD ARCHIVE &amp; OTHER DISPATCHES
             </h2>
             <p className="np-section-deck font-serif">
-              An exhaustive review of high-throughput microservices, AI-assisted agents, and full-stack enterprise applications built for mission-critical deployments.
+              Companion builds across AI agents, hackathon systems, and supporting microservices — kept separate from the flagship e-commerce platform.
             </p>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-            {/* Live Search Bar */}
             <div style={{
               display: 'flex',
               alignItems: 'center',
@@ -167,7 +301,6 @@ export default function Projects() {
               )}
             </div>
 
-            {/* Category Filter Tabs */}
             <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
               {categories.map(cat => (
                 <button
@@ -195,8 +328,6 @@ export default function Projects() {
 
         <hr className="np-rule-double" />
 
-
-        {/* Projects Card Grid */}
         <motion.div className="projects-card-grid" layout>
           <AnimatePresence>
             {filteredProjects.length === 0 ? (

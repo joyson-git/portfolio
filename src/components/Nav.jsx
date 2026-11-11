@@ -4,8 +4,8 @@ import { playHover, playClick } from '../utils/soundEffects'
 
 const NAV_LINKS = [
   { label: 'P1. Lead Story', href: '#hero' },
-  { label: 'P2. Investigations', href: '#projects' },
-  { label: 'P3. Chronicles', href: '#experience' },
+  { label: 'P2. Chronicles', href: '#experience' },
+  { label: 'P3. Investigations', href: '#projects' },
   { label: 'P4. Commodities', href: '#skills' },
   { label: 'P5. Classifieds', href: '#contact' },
 ]
@@ -18,7 +18,7 @@ export default function Nav({ onOpenCmd, onOpenContact, edition = 'morning', onT
   useEffect(() => {
     const fn = () => {
       setScrolled(window.scrollY > 40)
-      const ids = ['hero', 'projects', 'experience', 'skills', 'contact']
+      const ids = ['hero', 'experience', 'projects', 'skills', 'contact']
       const pos = window.scrollY + 180
       for(let i = ids.length - 1; i >= 0; i--) {
         const el = document.getElementById(ids[i])
@@ -110,14 +110,13 @@ export default function Nav({ onOpenCmd, onOpenContact, edition = 'morning', onT
             </button>
 
             <a
-              href="/Joyson_Pinto_FullStackDeveloper_Resume.pdf"
-              download="Joyson_Pinto_FullStackDeveloper_Resume.pdf"
+              href="https://drive.google.com/drive/folders/1Ver0FBHNnaooAVF-wEyxP7EU6BNHwngi?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               className="np-stamp-btn np-stamp-btn--primary font-mono"
               style={{ padding: '0.35rem 0.75rem', fontSize: '0.68rem' }}
             >
-              <span>PDF ↓</span>
+              <span>PDF ↗</span>
             </a>
           </div>
 

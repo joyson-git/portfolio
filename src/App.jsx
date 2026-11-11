@@ -99,8 +99,8 @@ export default function App() {
           <main>
             {/* Front Page and inner newspaper pages */}
             <Hero onOpenContact={() => setContactOpen(true)} />
-            <Projects />
             <Experience />
+            <Projects />
             <Skills />
             <Education />
             <Achievements />
